@@ -1,13 +1,10 @@
 {
   "version": 2,
+  "installCommand": "npm install",
   "builds": [
     {
       "src": "server/index.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "client/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -30,10 +27,6 @@
     {
       "src": "/index.html",
       "dest": "client/index.html"
-    },
-    {
-      "src": "/(.*\\.html)",
-      "dest": "client/$1"
     }
   ]
 }
