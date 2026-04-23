@@ -22,21 +22,31 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Security ────────────────────────────────────────────────
-app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginOpenerPolicy: false,
+}));
 
 // ── CORS ────────────────────────────────────────────────────
-const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
-const allowedOrigins = (process.env.CORS_ORIGINS || 'http://127.0.0.1:5500,http://localhost:5500')
-  .split(',')
-  .map(o => o.trim());
+const allowedOrigins = [
+  'http://127.0.0.1:5500',
+  'http://localhost:5500',
+  'http://localhost:3000',
+  'https://blood-donation-peach-one.vercel.app',
+  ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',').map(o => o.trim()) : []),
+];
 
 app.use(cors({
   origin(origin, cb) {
-    // Allow all origins on Vercel (same-domain), restrict locally
-    if (!origin || isProduction || allowedOrigins.includes(origin)) return cb(null, true);
+    // Allow requests with no origin (server-to-server, Postman, etc.)
+    if (!origin) return cb(null, true);
+    // Allow if in list OR if on Vercel
+    if (allowedOrigins.includes(origin) || process.env.VERCEL) return cb(null, true);
     cb(new Error('Not allowed by CORS'));
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // ── Body parsing & logging ──────────────────────────────────
