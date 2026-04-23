@@ -47,38 +47,49 @@ function render404() {
 
 async function renderLanding() {
   let stats = { total_users: 0, donations_this_month: 0, active_donors: 0 };
-  try { stats = await api.get('/admin/stats'); } catch (_) {}
+  try { stats = await api.get('/public/stats'); } catch (_) {}
 
   document.getElementById('app').innerHTML = `
     <div class="landing">
-      <section class="hero">
+      <!-- Background Blobs -->
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      
+      <section class="hero glass-panel">
         <div class="hero-content">
-          <h1>Save a Life.<br/><span>Donate Blood.</span></h1>
+          <div class="badge badge-pulse mb-2">Join the Lifesaver Network</div>
+          <h1>Save a Life.<br/><span class="text-gradient">Donate Blood.</span></h1>
           <p>Connect with verified blood donors in your area. Our platform makes it easy to find, contact, and coordinate life-saving blood donations when every second counts.</p>
-          <div class="hero-actions">
-            <a href="#/register" class="btn btn-primary">Register as Donor</a>
-            <a href="#/login" class="btn btn-secondary">Find Blood</a>
+          <div class="hero-actions mt-2">
+            <a href="#/register" class="btn btn-primary btn-glow">Register as Donor</a>
+            <a href="#/login" class="btn btn-secondary glass-btn">Find Blood</a>
           </div>
         </div>
       </section>
+      
       <div class="stats-bar">
-        <div class="card stat-card">
-          <div class="stat-value">${stats.total_users || '0'}</div>
+        <div class="card stat-card glass-card">
+          <div class="stat-icon glass-icon">👥</div>
+          <div class="stat-value text-gradient">${stats.total_users || '0'}</div>
           <div class="stat-label">Registered Donors</div>
         </div>
-        <div class="card stat-card">
-          <div class="stat-value">${stats.active_donors || '0'}</div>
+        <div class="card stat-card glass-card">
+          <div class="stat-icon glass-icon">🩸</div>
+          <div class="stat-value text-gradient">${stats.active_donors || '0'}</div>
           <div class="stat-label">Active Donors</div>
         </div>
-        <div class="card stat-card">
-          <div class="stat-value">${stats.donations_this_month || '0'}</div>
+        <div class="card stat-card glass-card">
+          <div class="stat-icon glass-icon">❤️</div>
+          <div class="stat-value text-gradient">${stats.donations_this_month || '0'}</div>
           <div class="stat-label">Donations This Month</div>
         </div>
       </div>
-      <section class="landing-about">
+      
+      <section class="landing-about glass-panel mt-2">
         <h2>Why LifeFlow?</h2>
         <p>Every two seconds, someone needs blood. LifeFlow bridges the gap between donors and recipients with a streamlined digital platform. Search by blood group and location, connect instantly, and track your donation history — all in one place.</p>
       </section>
+      
       <footer class="landing-footer">
         &copy; ${new Date().getFullYear()} LifeFlow Blood Donation Platform. Built with ❤️ to save lives.
       </footer>

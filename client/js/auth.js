@@ -6,7 +6,9 @@ async function renderLogin() {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="auth-page">
-      <div class="card auth-card">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2" style="bottom: 0; left: 0;"></div>
+      <div class="auth-card glass-card">
         <h2>Welcome Back</h2>
         <p class="auth-subtitle">Sign in to find donors and save lives</p>
         <form id="login-form">
@@ -59,7 +61,9 @@ async function renderRegister() {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="auth-page">
-      <div class="card auth-card">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2" style="bottom: 0; left: 0;"></div>
+      <div class="auth-card glass-card" style="max-width: 500px;">
         <h2>Create Account</h2>
         <p class="auth-subtitle">Join the community of life-savers</p>
         <form id="register-form">

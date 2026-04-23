@@ -71,6 +71,44 @@ app.get('/api/locations', async (_req, res) => {
   }
 });
 
+// Public stats endpoint (for landing page)
+app.get('/api/public/stats', async (_req, res) => {
+  try {
+    // Total users
+    const { count: total_users } = await supabase
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .is('deleted_at', null);
+
+    // Active donors
+    const { count: active_donors } = await supabase
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_available', true)
+      .is('deleted_at', null);
+
+    // Donations this month
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+    const { count: donations_this_month } = await supabase
+      .from('donations')
+      .select('*', { count: 'exact', head: true })
+      .gte('donation_date', startOfMonth.toISOString().split('T')[0]);
+
+    res.json({
+      success: true,
+      data: {
+        total_users: total_users || 0,
+        active_donors: active_donors || 0,
+        donations_this_month: donations_this_month || 0,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message, code: 'PUBLIC_STATS_ERROR' });
+  }
+});
+
 // ── Authenticated routes ────────────────────────────────────
 app.use('/api/users', authenticate, userRoutes);
 app.use('/api/donors', authenticate, donorRoutes);

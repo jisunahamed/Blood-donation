@@ -21,21 +21,21 @@ async function renderDashboard() {
         </div>
 
         <div class="dashboard-stats">
-          <div class="card stat-card">
+          <div class="card stat-card glass-card">
             <div class="stat-icon" style="background:var(--red-pale);color:var(--red)">🩸</div>
-            <div class="stat-value">${formatDate(data.last_donation_date)}</div>
+            <div class="stat-value text-gradient" style="font-size:2rem">${formatDate(data.last_donation_date)}</div>
             <div class="stat-label">Last Donated</div>
           </div>
-          <div class="card stat-card">
+          <div class="card stat-card glass-card">
             <div class="stat-icon" style="background:var(--info-light);color:var(--info)">💉</div>
-            <div class="stat-value">${formatDate(data.last_received_date)}</div>
+            <div class="stat-value text-gradient" style="font-size:2rem">${formatDate(data.last_received_date)}</div>
             <div class="stat-label">Last Received</div>
           </div>
-          <div class="card stat-card">
+          <div class="card stat-card glass-card">
             <div class="stat-icon" style="background:${data.is_available ? 'var(--success-light)' : 'var(--red-pale)'};color:${data.is_available ? 'var(--success)' : 'var(--red)'}">
               ${data.is_available ? '✓' : '⏳'}
             </div>
-            <div class="stat-value">${data.is_available ? 'Available' : 'Unavailable'}</div>
+            <div class="stat-value text-gradient">${data.is_available ? 'Available' : 'Unavailable'}</div>
             <div class="stat-label">${daysText}</div>
           </div>
         </div>

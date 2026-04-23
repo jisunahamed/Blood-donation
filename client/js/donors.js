@@ -70,7 +70,7 @@ async function searchDonors() {
       const revealed = _donorState.revealedContacts[d.id];
 
       return `
-        <div class="card donor-card" data-donor-id="${d.id}">
+        <div class="card donor-card glass-card" data-donor-id="${d.id}">
           <div class="donor-info">
             <div class="donor-avatar" style="background:${avatarColor}">${initials}</div>
             <div>

@@ -15,7 +15,7 @@ async function renderProfile() {
     app.innerHTML = `
       <div class="profile-page">
         <h1>My Profile</h1>
-        <div class="card">
+        <div class="card glass-card">
           <form id="profile-form">
             <div class="form-group">
               <label class="form-label" for="prof-name">Full Name</label>

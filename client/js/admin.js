@@ -72,10 +72,10 @@ async function adminDashboard(el) {
   el.innerHTML = `
     <h2>Admin Dashboard</h2>
     <div class="dashboard-stats">
-      <div class="card stat-card"><div class="stat-icon" style="background:var(--info-light);color:var(--info)">👥</div><div class="stat-value">${stats.total_users}</div><div class="stat-label">Total Users</div></div>
-      <div class="card stat-card"><div class="stat-icon" style="background:var(--success-light);color:var(--success)">✓</div><div class="stat-value">${stats.active_donors}</div><div class="stat-label">Active Donors</div></div>
-      <div class="card stat-card"><div class="stat-icon" style="background:var(--red-pale);color:var(--red)">🩸</div><div class="stat-value">${stats.total_donations}</div><div class="stat-label">Total Donations</div></div>
-      <div class="card stat-card"><div class="stat-icon" style="background:var(--warning-light);color:var(--warning)">📅</div><div class="stat-value">${stats.donations_this_month}</div><div class="stat-label">This Month</div></div>
+      <div class="card stat-card glass-card"><div class="stat-icon" style="background:var(--info-light);color:var(--info)">👥</div><div class="stat-value text-gradient">${stats.total_users}</div><div class="stat-label">Total Users</div></div>
+      <div class="card stat-card glass-card"><div class="stat-icon" style="background:var(--success-light);color:var(--success)">✓</div><div class="stat-value text-gradient">${stats.active_donors}</div><div class="stat-label">Active Donors</div></div>
+      <div class="card stat-card glass-card"><div class="stat-icon" style="background:var(--red-pale);color:var(--red)">🩸</div><div class="stat-value text-gradient">${stats.total_donations}</div><div class="stat-label">Total Donations</div></div>
+      <div class="card stat-card glass-card"><div class="stat-icon" style="background:var(--warning-light);color:var(--warning)">📅</div><div class="stat-value text-gradient">${stats.donations_this_month}</div><div class="stat-label">This Month</div></div>
     </div>
     <div class="grid-2 mt-2">
       <div class="card">
