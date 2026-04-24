@@ -100,7 +100,7 @@ async function renderLanding() {
     if (res) {
       stats = {
         total_users: res.total_users || 0,
-        donations_this_month: res.donations_this_month || 0,
+        total_donations: res.total_donations || 0,
         active_donors: res.active_donors || 0
       };
     }
@@ -141,21 +141,21 @@ async function renderLanding() {
           <div class="impact-stat">
             <div class="impact-icon">💧</div>
             <div class="impact-text">
-              <h4>${en2bn(stats.total_users + 1500)}+</h4>
+              <h4>${en2bn(stats.active_donors)}</h4>
               <p>মোট রক্তদাতা</p>
             </div>
           </div>
           <div class="impact-stat">
             <div class="impact-icon">❤️</div>
             <div class="impact-text">
-              <h4>${en2bn(stats.donations_this_month + 850)}+</h4>
+              <h4>${en2bn(stats.total_donations || 0)}</h4>
               <p>সফল রক্তদান</p>
             </div>
           </div>
           <div class="impact-stat">
             <div class="impact-icon">👥</div>
             <div class="impact-text">
-              <h4>${en2bn(stats.total_users + 2400)}+</h4>
+              <h4>${en2bn(stats.total_users)}</h4>
               <p>মোট ইউজার</p>
             </div>
           </div>

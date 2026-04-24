@@ -94,10 +94,10 @@ app.get('/api/public/stats', async (_req, res) => {
     const startOfMonth = new Date();
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
-    const { count: donations_this_month } = await supabase
+    // Total donations ever
+    const { count: total_donations } = await supabase
       .from('donations')
-      .select('*', { count: 'exact', head: true })
-      .gte('donation_date', startOfMonth.toISOString().split('T')[0]);
+      .select('*', { count: 'exact', head: true });
 
     res.json({
       success: true,
@@ -105,6 +105,7 @@ app.get('/api/public/stats', async (_req, res) => {
         total_users: total_users || 0,
         active_donors: active_donors || 0,
         donations_this_month: donations_this_month || 0,
+        total_donations: total_donations || 0,
       },
     });
   } catch (err) {
