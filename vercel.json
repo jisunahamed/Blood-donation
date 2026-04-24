@@ -27,6 +27,13 @@
       }
     },
     {
+      "src": "/img/(.*)",
+      "dest": "client/img/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
       "src": "/",
       "dest": "client/index.html"
     },

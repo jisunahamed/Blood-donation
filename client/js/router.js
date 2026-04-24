@@ -104,7 +104,15 @@ async function renderLanding() {
           </div>
         </div>
         
-        <!-- IMPACT / STATS OVERLAY SECTION -->
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+          <div class="mouse-icon"><div class="wheel"></div></div>
+          <span>নিচে স্ক্রোল করুন</span>
+        </div>
+      </section>
+
+      <!-- IMPACT / STATS OVERLAY SECTION -->
+      <section class="impact-dark" style="padding-top: 0;">
         <div class="impact-glass-card">
           <div class="impact-stat">
             <div class="impact-icon">💧</div>
@@ -134,12 +142,6 @@ async function renderLanding() {
               <p>নির্ভরযোগ্য সেবা</p>
             </div>
           </div>
-        </div>
-        
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-          <div class="mouse-icon"><div class="wheel"></div></div>
-          <span>নিচে স্ক্রোল করুন</span>
         </div>
       </section>
 
@@ -196,28 +198,24 @@ async function updateNav() {
   profile = profile || {};
   const hash = window.location.hash.slice(1) || '/';
 
+  const isDark = hash === '/';
+  
+  if (isDark) {
+    document.body.classList.add('dark-theme');
+  } else {
+    document.body.classList.remove('dark-theme');
+  }
+
   if (data?.session) {
     navLinks.innerHTML = `
-      <a href="#/dashboard" class="${hash === '/dashboard' ? 'active' : ''}">ড্যাশবোর্ড</a>
-      <a href="#/search" class="${hash === '/search' ? 'active' : ''}">রক্ত খুঁজুন</a>
-      <a href="#/profile" class="${hash === '/profile' ? 'active' : ''}">প্রোফাইল</a>
-      ${profile.is_admin ? `<a href="#/admin" class="${hash === '/admin' ? 'active' : ''}">এডমিন</a>` : ''}
-      <span class="nav-user">${bloodBadge(profile.blood_group)} ${profile.name || 'User'}</span>
+      <a href="#/dashboard" class="nav-link ${hash === '/dashboard' ? 'active' : ''}">ড্যাশবোর্ড</a>
+      <a href="#/search" class="nav-link ${hash === '/search' ? 'active' : ''}">রক্ত খুঁজুন</a>
+      <a href="#/profile" class="nav-link ${hash === '/profile' ? 'active' : ''}">প্রোফাইল</a>
+      ${profile.is_admin ? `<a href="#/admin" class="nav-link ${hash === '/admin' ? 'active' : ''}">এডমিন</a>` : ''}
+      <span class="nav-user" style="color: ${isDark ? '#E0E0E0' : 'inherit'}">${bloodBadge(profile.blood_group)} ${profile.name || 'User'}</span>
       <button class="btn-logout" onclick="handleLogout()">লগআউট</button>
     `;
   } else {
-    // Determine if we are in the dark theme (landing page)
-    const isDark = hash === '/';
-    const darkClass = isDark ? 'dark-theme' : '';
-    
-    // In index.html the body/nav might not be in the .dark-theme wrapper, 
-    // so let's toggle a class on the body to let the navbar know it should be dark.
-    if(isDark) {
-      document.body.classList.add('dark-theme');
-    } else {
-      document.body.classList.remove('dark-theme');
-    }
-
     navLinks.innerHTML = `
       <a href="#/" class="nav-link ${hash === '/' ? 'active' : ''}">হোম</a>
       <a href="#/" class="nav-link">ডোনেট করুন</a>
