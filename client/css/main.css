@@ -135,9 +135,11 @@ input, select, textarea { font-family: inherit; }
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  position: sticky;
+  position: fixed;
   top: 1rem;
-  margin: 1rem 2rem;
+  left: 2rem;
+  right: 2rem;
+  margin: 0;
   z-index: 1000;
   border-radius: 100px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -529,7 +531,7 @@ input, select, textarea { font-family: inherit; }
 .page-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 5rem;
+  padding: 7rem 1rem 5rem; /* Increased top padding for fixed nav */
   font-family: 'Hind Siliguri', 'Inter', sans-serif;
 }
 
@@ -842,7 +844,9 @@ input, select, textarea { font-family: inherit; }
   #bottom-nav { display: block; }
 
   .navbar {
-    margin: 0.5rem 1rem;
+    left: 1rem;
+    right: 1rem;
+    margin: 0;
     padding: 0.6rem 1.2rem;
     border-radius: 1.5rem;
     top: 0.5rem;
