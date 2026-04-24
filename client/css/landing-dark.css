@@ -42,16 +42,23 @@
 /* ── HERO SECTION ────────────────────────────────────────── */
 .hero-dark {
   position: relative;
-  min-height: 100svh; /* uses small viewport height for mobile browsers */
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 7rem 1.2rem 4rem;
   background-image: url('../img/herobg.png');
   background-size: cover;
-  background-position: center top;
+  background-position: center center;
   background-repeat: no-repeat;
   overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .hero-dark {
+    background-size: 100% auto; /* Zoom out effect for desktop */
+    background-position: center 20%;
+  }
 }
 
 .hero-dark::before {
@@ -60,9 +67,9 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(10, 10, 20, 0.3) 0%,
-    rgba(10, 10, 20, 0.5) 60%,
-    rgba(10, 10, 20, 0.85) 100%
+    rgba(10, 10, 20, 0.7) 0%,
+    rgba(10, 10, 20, 0.8) 60%,
+    rgba(10, 10, 20, 0.95) 100%
   );
   z-index: 0;
 }
