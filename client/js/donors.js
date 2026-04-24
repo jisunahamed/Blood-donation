@@ -142,7 +142,11 @@ async function confirmDonation(donorId) {
     await api.post('/donations/confirm', { donor_id: donorId, notes });
     delete _donorState.revealedContacts[donorId];
     showToast('Donation confirmed! Thank you!');
-    searchDonors();
+    if (window.location.hash === '#/dashboard') {
+      renderDashboard();
+    } else {
+      searchDonors();
+    }
   } catch (err) {
     showToast(err.message, 'error');
   } finally {

@@ -46,7 +46,7 @@ async function renderDashboard() {
             ${data.network_history.length === 0
               ? '<div class="empty-state"><div class="empty-icon">🔗</div><p>No contacts yet. Search for donors to get started.</p></div>'
               : `<div class="table-wrap"><table class="table table-striped">
-                  <thead><tr><th>Donor Info</th><th>Blood Group</th><th>Last Contact</th><th>Times</th></tr></thead>
+                  <thead><tr><th>Donor Info</th><th>Blood Group</th><th>Last Contact</th><th>Times</th><th>Action</th></tr></thead>
                   <tbody>${data.network_history.map(n => {
                     const nameDisplay = n.contact?.hide_name ? 'Anonymous Donor' : (n.contact?.name || 'Anonymous Donor');
                     return `
@@ -55,6 +55,9 @@ async function renderDashboard() {
                       <td>${bloodBadge(n.contact?.blood_group)}</td>
                       <td>${formatDateTime(n.last_contact_at)}</td>
                       <td>${n.contact_count}</td>
+                      <td>
+                        <button class="btn btn-success btn-sm" onclick="openDonationModal('${n.contact_id}')">✓ Donated</button>
+                      </td>
                     </tr>`;
                   }).join('')}
                   </tbody>
