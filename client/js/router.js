@@ -75,13 +75,20 @@ function render404() {
   `;
 }
 
+const en2bn = (num) => String(num).replace(/[0-9]/g, w => ({
+  0:'০',1:'১',2:'২',3:'৩',4:'৪',5:'৫',6:'৬',7:'৭',8:'৮',9:'৯'
+}[w]));
+
 async function renderLanding() {
-  let stats = { total_users: 12500, donations_this_month: 8750 };
+  let stats = { total_users: 0, donations_this_month: 0, active_donors: 0 };
   try { 
     const res = await api.get('/public/stats'); 
     if(res) {
-       stats.total_users = res.total_users > 12500 ? res.total_users : 12500;
-       stats.donations_this_month = res.donations_this_month > 8750 ? res.donations_this_month : 8750;
+       stats = {
+         total_users: res.total_users || 0,
+         donations_this_month: res.donations_this_month || 0,
+         active_donors: res.active_donors || 0
+       };
     }
   } catch (_) {}
 
@@ -117,22 +124,22 @@ async function renderLanding() {
           <div class="impact-stat">
             <div class="impact-icon">💧</div>
             <div class="impact-text">
-              <h4>${stats.total_users.toLocaleString()}+</h4>
+              <h4>${en2bn(stats.total_users.toLocaleString())}</h4>
               <p>মোট রক্তদাতা</p>
+            </div>
+          </div>
+          <div class="impact-stat">
+            <div class="impact-icon">🩸</div>
+            <div class="impact-text">
+              <h4>${en2bn(stats.active_donors.toLocaleString())}</h4>
+              <p>বর্তমান ডোনার</p>
             </div>
           </div>
           <div class="impact-stat">
             <div class="impact-icon">❤️</div>
             <div class="impact-text">
-              <h4>${stats.donations_this_month.toLocaleString()}+</h4>
-              <p>সফল রক্তদানের অনুরোধ</p>
-            </div>
-          </div>
-          <div class="impact-stat">
-            <div class="impact-icon">👥</div>
-            <div class="impact-text">
-              <h4>৩৫+</h4>
-              <p>বিশ্ববিদ্যালয় যুক্ত</p>
+              <h4>${en2bn(stats.donations_this_month.toLocaleString())}</h4>
+              <p>সফল রক্তদান</p>
             </div>
           </div>
           <div class="impact-stat">
@@ -219,10 +226,7 @@ async function updateNav() {
     navLinks.innerHTML = `
       <a href="#/" class="nav-link ${hash === '/' ? 'active' : ''}">হোম</a>
       <a href="#/" class="nav-link">ডোনেট করুন</a>
-      <a href="#/" class="nav-link">রক্তের প্রয়োজন</a>
-      <a href="#/" class="nav-link">ইভেন্ট</a>
-      <a href="#/" class="nav-link">ব্লগ</a>
-      <a href="#/" class="nav-link" style="margin-right: 1rem;">আমাদের সম্পর্কে</a>
+      <a href="#/" class="nav-link" style="margin-right: 1rem;">রক্তের প্রয়োজন</a>
       <a href="#/login" class="nav-link" style="font-weight:600;">লগইন করুন</a>
       <a href="#/register" class="${isDark ? 'btn-red-glow' : 'btn btn-primary btn-glow'}" style="text-decoration:none; padding: 0.5rem 1.5rem;">সাইন আপ করুন</a>
     `;
