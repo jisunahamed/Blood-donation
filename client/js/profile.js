@@ -1,120 +1,112 @@
-// ============================================================
-// Profile Page — Bengali UI, Premium Design
-// ============================================================
-
 async function renderProfile() {
   const app = document.getElementById('app');
-  app.innerHTML = `<div class="page-container"><div class="page-loading"><div class="spinner-drop"></div><span>লোড হচ্ছে...</span></div></div>`;
+  app.innerHTML = `<div class="page-container"><div class="spinner-drop"></div></div>`;
 
   try {
-    const [profile, locations] = await Promise.all([
-      api.get('/users/me'),
-      api.get('/locations'),
-    ]);
+    const profile = await api.get('/users/me');
+    localStorage.setItem('profile', JSON.stringify(profile));
 
     app.innerHTML = `
       <div class="page-container">
-        <!-- Profile Header -->
+        <!-- PROFILE HEADER -->
         <div class="profile-header">
-          <div class="profile-avatar-big">${(profile.name || 'U')[0].toUpperCase()}</div>
+          <div class="profile-avatar-big">
+            ${profile.blood_group ? profile.blood_group : '👤'}
+          </div>
           <div class="profile-header-info">
-            <h1 class="profile-heading">${profile.name || 'আপনার প্রোফাইল'}</h1>
-            <div>${bloodBadge(profile.blood_group)}</div>
-            <p class="profile-location">📍 ${profile.location_name || 'এলাকা অজানা'}</p>
+            <h1 class="profile-heading">${profile.name}</h1>
+            <p class="profile-location">📍 ${profile.location || 'অবস্থান যোগ করুন'}</p>
           </div>
         </div>
 
-        <!-- Edit Form -->
-        <div class="section-card" style="margin-top: 1.5rem;">
-          <h2 class="section-title" style="margin-bottom: 1.5rem;">✏️ তথ্য আপডেট করুন</h2>
-          <form id="profile-form">
-            <div class="form-group">
-              <label class="form-label" for="prof-name">পুরো নাম</label>
-              <input class="form-input" type="text" id="prof-name" value="${profile.name || ''}" required placeholder="আপনার নাম লিখুন" />
-            </div>
-            <div class="form-row-mobile">
-              <div class="form-group">
-                <label class="form-label" for="prof-blood">রক্তের গ্রুপ</label>
-                <select class="form-select" id="prof-blood">
-                  ${['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(g =>
-                    `<option${g === profile.blood_group ? ' selected' : ''}>${g}</option>`
-                  ).join('')}
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="prof-location">এলাকা</label>
-                <select class="form-select" id="prof-location">
-                  ${locations.map(l =>
-                    `<option value="${l.id}"${l.id === profile.location_id ? ' selected' : ''}>${l.name} (${l.zone})</option>`
-                  ).join('')}
-                </select>
-              </div>
-            </div>
-            <div class="form-row-mobile">
-              <div class="form-group">
-                <label class="form-label" for="prof-contact">মোবাইল নম্বর</label>
-                <input class="form-input" type="tel" id="prof-contact" value="${profile.contact_number || ''}" required placeholder="01XXXXXXXXX" />
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="prof-dept">বিভাগ <small>(ঐচ্ছিক)</small></label>
-                <input class="form-input" type="text" id="prof-dept" value="${profile.department || ''}" placeholder="যেমন: CSE, BBA" />
-              </div>
-            </div>
-
-            <!-- Toggles -->
-            <div class="toggle-group">
-              <label class="toggle-item" for="prof-available">
-                <div class="toggle-text">
-                  <span class="toggle-title">রক্ত দিতে পারব</span>
-                  <span class="toggle-desc">অফ করলে আপনাকে সার্চে দেখা যাবে না</span>
-                </div>
-                <div class="toggle-switch">
-                  <input type="checkbox" id="prof-available" ${profile.is_available ? 'checked' : ''} />
-                  <span class="toggle-slider"></span>
-                </div>
-              </label>
-
-              <label class="toggle-item" for="prof-hide-name">
-                <div class="toggle-text">
-                  <span class="toggle-title">নাম গোপন রাখুন</span>
-                  <span class="toggle-desc">চালু করলে প্রোফাইল Anonymous দেখাবে</span>
-                </div>
-                <div class="toggle-switch">
-                  <input type="checkbox" id="prof-hide-name" ${profile.hide_name ? 'checked' : ''} />
-                  <span class="toggle-slider"></span>
-                </div>
-              </label>
-            </div>
-
-            <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 0.5rem;">✅ সংরক্ষণ করুন</button>
-          </form>
+        <!-- QUICK STATUS TOGGLES -->
+        <div class="section-header" style="margin: 2rem 0 1rem;">
+          <h2 style="font-size: 1.1rem; font-weight: 800; font-family: 'Hind Siliguri', sans-serif; color: var(--muted);">অ্যাক্টিভ স্ট্যাটাস</h2>
         </div>
+        
+        <div class="toggle-group">
+          <label class="toggle-item">
+            <div class="toggle-text">
+              <span class="toggle-title">রক্ত দানে আগ্রহী</span>
+              <span class="toggle-desc">আপনার স্ট্যাটাস পাবলিকলি দেখা যাবে</span>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" id="profile-availability" ${profile.is_available ? 'checked' : ''} onchange="updateProfileAvailability(this.checked)">
+              <span class="toggle-slider"></span>
+            </div>
+          </label>
+        </div>
+
+        <!-- PERSONAL INFORMATION -->
+        <div class="section-header" style="margin: 2rem 0 1rem;">
+          <h2 style="font-size: 1.1rem; font-weight: 800; font-family: 'Hind Siliguri', sans-serif; color: var(--muted);">ব্যক্তিগত তথ্য</h2>
+        </div>
+
+        <form id="profile-form" onsubmit="handleProfileUpdate(event)" class="card shadow-sm" style="padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+          <div class="form-group">
+            <label class="form-label">পুরো নাম</label>
+            <input type="text" name="name" class="form-control" value="${profile.name}" required>
+          </div>
+
+          <div class="form-row-mobile">
+            <div class="form-group">
+              <label class="form-label">রক্তের গ্রুপ</label>
+              <select name="blood_group" class="form-control" required disabled>
+                <option value="${profile.blood_group}">${profile.blood_group}</option>
+              </select>
+              <p class="form-hint">রক্তের গ্রুপ পরিবর্তন করা যাবে না।</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ফোন নম্বর</label>
+              <input type="text" class="form-control" value="${profile.phone}" readonly>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">বর্তমান অবস্থান (উপজেলা/শহর)</label>
+            <input type="text" name="location" class="form-control" value="${profile.location || ''}" placeholder="উদা: টঙ্গী, গাজীপুর" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-glow" style="width: 100%; margin-top: 1rem; padding: 0.8rem;">তথ্য আপডেট করুন</button>
+        </form>
+
+        <button onclick="handleLogout()" class="btn btn-outline" style="width: 100%; margin-top: 2rem; border-color: var(--border); color: var(--muted);">লগআউট করুন</button>
+        
+        <div style="height: 2rem;"></div> <!-- bottom spacing -->
       </div>
     `;
-
-    document.getElementById('profile-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      showSpinner();
-      try {
-        const updated = await api.put('/users/me', {
-          name: document.getElementById('prof-name').value.trim(),
-          blood_group: document.getElementById('prof-blood').value,
-          location_id: document.getElementById('prof-location').value,
-          contact_number: document.getElementById('prof-contact').value.trim(),
-          department: document.getElementById('prof-dept').value.trim(),
-          is_available: document.getElementById('prof-available').checked,
-          hide_name: document.getElementById('prof-hide-name').checked,
-        });
-        localStorage.setItem('profile', JSON.stringify(updated));
-        showToast('প্রোফাইল আপডেট হয়েছে!');
-        updateNav();
-      } catch (err) {
-        showToast(err.message, 'error');
-      } finally {
-        hideSpinner();
-      }
-    });
   } catch (err) {
-    app.innerHTML = `<div class="page-container"><div class="empty-state"><div class="empty-icon">⚠️</div><p>${err.message}</p></div></div>`;
+    showToast('প্রোফাইল লোড করতে সমস্যা হয়েছে', 'error');
+  }
+}
+
+async function updateProfileAvailability(isAvailable) {
+  try {
+    await api.put('/users/profile', { is_available: isAvailable });
+    showToast(isAvailable ? 'আপনি এখন রক্ত দানে প্রস্তুত' : 'ডোনার স্ট্যাটাস বন্ধ করা হয়েছে');
+    // Update local cache
+    const profile = JSON.parse(localStorage.getItem('profile'));
+    profile.is_available = isAvailable;
+    localStorage.setItem('profile', JSON.stringify(profile));
+  } catch (err) {
+    showToast('স্ট্যাটাস আপডেট করা যায়নি', 'error');
+  }
+}
+
+async function handleProfileUpdate(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
+  
+  showSpinner();
+  try {
+    const updated = await api.put('/users/profile', data);
+    localStorage.setItem('profile', JSON.stringify(updated));
+    showToast('প্রোফাইল সফলভাবে আপডেট করা হয়েছে');
+    renderProfile();
+  } catch (err) {
+    showToast(err.message, 'error');
+  } finally {
+    hideSpinner();
   }
 }
