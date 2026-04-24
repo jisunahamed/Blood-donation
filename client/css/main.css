@@ -980,7 +980,7 @@ input, select, textarea { font-family: inherit; }
   .nav-links.logged-in-mobile.open { display: flex !important; }
 
   /* Page container — add bottom padding for bottom nav */
-  .page-container { padding: 1rem 0.9rem 5.5rem; }
+  .page-container { padding: 6.5rem 1rem 6rem; }
 
   /* Status cards: 2 cols */
   .status-cards { grid-template-columns: 1fr 1fr; }
@@ -995,7 +995,7 @@ input, select, textarea { font-family: inherit; }
   .form-row-mobile { grid-template-columns: 1fr; }
 
   /* Auth page */
-  .auth-page { padding: 5rem 1.2rem 2rem; min-height: calc(100svh - 60px); }
+  .auth-page { padding: 6.5rem 1.2rem 2rem; min-height: calc(100svh - 60px); }
   .auth-card { padding: 2rem 1.5rem; }
 
   /* Admin sidebar collapses */
