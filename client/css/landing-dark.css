@@ -335,6 +335,12 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .footer-dark {
+    padding-bottom: 7rem; /* Extra space for bottom nav bar */
+  }
+}
 .footer-dark p { color: var(--muted); font-size: 0.9rem; }
 
 /* ── ANIMATIONS ───────────────────────────────────────────── */
