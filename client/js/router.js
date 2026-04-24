@@ -167,31 +167,23 @@ async function renderLanding() {
         <div class="features-grid">
           <div class="feature-card-dark">
             <div class="feature-icon-dark">🩸</div>
-            <div>
-              <h3>রক্ত দান করুন</h3>
-              <p>সহজেই ডোনার হিসেবে নিবন্ধিত হন এবং জীবন বাঁচান।</p>
-            </div>
+            <h3>রক্ত দান করুন</h3>
+            <p>সহজেই ডোনার হিসেবে নিবন্ধিত হন এবং জীবন বাঁচান।</p>
           </div>
           <div class="feature-card-dark">
             <div class="feature-icon-dark">🔍</div>
-            <div>
-              <h3>রক্ত খুঁজুন</h3>
-              <p>ব্লাড গ্রুপ ও এলাকা দিয়ে কাছাকাছি ডোনার খুঁজুন।</p>
-            </div>
+            <h3>রক্ত খুঁজুন</h3>
+            <p>ব্লাড গ্রুপ ও এলাকা দিয়ে কাছাকাছি ডোনার খুঁজুন।</p>
           </div>
           <div class="feature-card-dark">
             <div class="feature-icon-dark">🔒</div>
-            <div>
-              <h3>সুরক্ষিত প্রোফাইল</h3>
-              <p>আপনার তথ্য সুরক্ষিত। প্রয়োজনে নাম গোপন রাখতে পারবেন।</p>
-            </div>
+            <h3>সুরক্ষিত প্রোফাইল</h3>
+            <p>আপনার তথ্য সুরক্ষিত। প্রয়োজনে নাম গোপন রাখতে পারবেন।</p>
           </div>
           <div class="feature-card-dark">
             <div class="feature-icon-dark">🤝</div>
-            <div>
-              <h3>বিশ্বস্ত নেটওয়ার্ক</h3>
-              <p>হাজারো বিশ্ববিদ্যালয় শিক্ষার্থীর একটি মানবিক আন্দোলন।</p>
-            </div>
+            <h3>বিশ্বস্ত নেটওয়ার্ক</h3>
+            <p>হাজারো বিশ্ববিদ্যালয় শিক্ষার্থীর একটি মানবিক আন্দোলন।</p>
           </div>
         </div>
       </section>
