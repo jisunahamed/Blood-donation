@@ -92,43 +92,19 @@ async function renderLanding() {
       <!-- HERO SECTION -->
       <section class="hero-dark">
         <div class="hero-dark-content">
-          <div class="trust-indicator">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            ১০,০০০+ শিক্ষার্থী ইতোমধ্যে যুক্ত
+          <div class="trust-indicator" style="margin-bottom: 2rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            ক্যাম্পাস থেকে সমাজের জন্য
           </div>
-          <h1>তোমার এক ফোঁটা <span class="text-red">রক্ত</span><br/>কারো জীবনের <span class="text-red">নতুন সুযোগ</span></h1>
-          <p>ক্যাম্পাস থেকে ক্যাম্পাসে, আমরা গড়ে তুলছি একটি মানবিক সমাজ। তুমি এগিয়ে আসো, জীবন বাঁচানোর এই মহৎ যাত্রায় শরিক হও।</p>
+          <h1 style="font-size: 3.5rem; line-height: 1.3;">তোমার এক ফোঁটা <span class="text-red">রক্ত</span><br/>কারো জীবনের <span class="text-red">নতুন সুযোগ</span></h1>
+          <p style="font-size: 1.1rem; max-width: 550px;">ক্যাম্পাস থেকে ক্যাম্পাসে, আমরা গড়ে তুলছি একটি মানবিক সমাজ।<br/>তুমি এগিয়ে আসো, জীবন বাঁচানোর এই মহৎ যাত্রায় শরিক হও।</p>
           <div class="hero-actions-dark">
-            <a href="#/register" class="btn-red-glow" style="text-decoration:none;">🩸 রক্ত দান করুন</a>
-            <a href="#/login" class="btn-glass-outline" style="text-decoration:none;">❤️ রক্তের প্রয়োজন</a>
+            <a href="#/register" class="btn-red-glow" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg> রক্ত দান করুন</a>
+            <a href="#/login" class="btn-glass-outline" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> রক্তের প্রয়োজন</a>
           </div>
         </div>
-      </section>
-
-      <!-- FEATURES SECTION -->
-      <section class="features-dark">
-        <div class="features-grid">
-          <div class="feature-card-dark">
-            <div class="feature-icon-dark">🩸</div>
-            <h3>রক্ত দান করুন</h3>
-          </div>
-          <div class="feature-card-dark">
-            <div class="feature-icon-dark">🔍</div>
-            <h3>রক্ত খুঁজুন</h3>
-          </div>
-          <div class="feature-card-dark">
-            <div class="feature-icon-dark">📅</div>
-            <h3>ইভেন্টে অংশ নিন</h3>
-          </div>
-          <div class="feature-card-dark">
-            <div class="feature-icon-dark">🤝</div>
-            <h3>বন্ধুদের সাথে যুক্ত হন</h3>
-          </div>
-        </div>
-      </section>
-
-      <!-- IMPACT / STATS SECTION -->
-      <section class="impact-dark">
+        
+        <!-- IMPACT / STATS OVERLAY SECTION -->
         <div class="impact-glass-card">
           <div class="impact-stat">
             <div class="impact-icon">💧</div>
@@ -145,11 +121,46 @@ async function renderLanding() {
             </div>
           </div>
           <div class="impact-stat">
+            <div class="impact-icon">👥</div>
+            <div class="impact-text">
+              <h4>৩৫+</h4>
+              <p>বিশ্ববিদ্যালয় যুক্ত</p>
+            </div>
+          </div>
+          <div class="impact-stat">
             <div class="impact-icon">🛡️</div>
             <div class="impact-text">
               <h4>১০০%</h4>
               <p>নির্ভরযোগ্য সেবা</p>
             </div>
+          </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+          <div class="mouse-icon"><div class="wheel"></div></div>
+          <span>নিচে স্ক্রোল করুন</span>
+        </div>
+      </section>
+
+      <!-- FEATURES SECTION -->
+      <section class="features-dark" style="padding-top: 10rem;">
+        <div class="features-grid">
+          <div class="feature-card-dark">
+            <div class="feature-icon-dark">🩸</div>
+            <h3>রক্ত দান করুন</h3>
+          </div>
+          <div class="feature-card-dark">
+            <div class="feature-icon-dark">🔍</div>
+            <h3>রক্ত খুঁজুন</h3>
+          </div>
+          <div class="feature-card-dark">
+            <div class="feature-icon-dark">📅</div>
+            <h3>ইভেন্টে অংশ নিন</h3>
+          </div>
+          <div class="feature-card-dark">
+            <div class="feature-icon-dark">🤝</div>
+            <h3>বন্ধুদের সাথে যুক্ত হন</h3>
           </div>
         </div>
       </section>
