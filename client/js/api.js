@@ -1,10 +1,9 @@
 // ============================================================
 // API Helper — Fetch wrapper with Bearer token
 // ============================================================
-// Auto-detect: same origin on Vercel, localhost:3000 in dev
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:3000/api'
-  : '/api';
+  : 'https://blood-donation-ra7q.vercel.app/api';
 
 const api = {
   _retried: false,
