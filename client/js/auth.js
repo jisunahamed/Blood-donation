@@ -11,6 +11,17 @@ async function renderLogin() {
       <div class="auth-card">
         <h2>ফিরে আসার জন্য ধন্যবাদ</h2>
         <p class="auth-subtitle">আপনার একাউন্টে লগইন করুন</p>
+
+        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: 1.5rem;" onclick="handleGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
+          গুগল দিয়ে লগইন
+        </button>
+
+        <div style="margin: 1.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative;">
+          <span style="background: #fff; padding: 0 0.5rem; position: relative; z-index: 1;">অথবা ইমেইল দিয়ে</span>
+          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border);"></div>
+        </div>
+
         <form id="login-form">
           <div class="form-group" style="text-align: left;">
             <label class="form-label">ইমেইল</label>
@@ -22,14 +33,6 @@ async function renderLogin() {
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 1rem;">লগইন করুন</button>
         </form>
-        <div style="margin: 1.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative;">
-          <span style="background: #fff; padding: 0 0.5rem; position: relative; z-index: 1;">অথবা</span>
-          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border);"></div>
-        </div>
-        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;" onclick="handleGoogleLogin()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
-          গুগল দিয়ে লগইন
-        </button>
         <p class="auth-link">একাউন্ট নেই? <a href="#/register">নতুন একাউন্ট খুলুন</a></p>
       </div>
     </div>
@@ -74,6 +77,17 @@ async function renderRegister() {
       <div class="auth-card" style="max-width: 500px;">
         <h2>নতুন একাউন্ট</h2>
         <p class="auth-subtitle">জীবন বাঁচাতে আজই আমাদের সাথে যুক্ত হোন</p>
+
+        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: 1.5rem;" onclick="handleGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
+          গুগল দিয়ে সাইন আপ
+        </button>
+
+        <div style="margin: 1.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative;">
+          <span style="background: #fff; padding: 0 0.5rem; position: relative; z-index: 1;">অথবা ফর্ম পূরণ করুন</span>
+          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border);"></div>
+        </div>
+
         <form id="register-form">
           <div class="form-group" style="text-align: left;">
             <label class="form-label">পুরো নাম *</label>
@@ -128,14 +142,6 @@ async function renderRegister() {
           
           <button type="submit" class="btn btn-primary" style="width:100%">একাউন্ট খুলুন</button>
         </form>
-        <div style="margin: 1.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative;">
-          <span style="background: #fff; padding: 0 0.5rem; position: relative; z-index: 1;">অথবা</span>
-          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border);"></div>
-        </div>
-        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;" onclick="handleGoogleLogin()">
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
-          গুগল দিয়ে সাইন আপ
-        </button>
         <p class="auth-link">ইতিমধ্যে একাউন্ট আছে? <a href="#/login">লগইন করুন</a></p>
       </div>
     </div>
