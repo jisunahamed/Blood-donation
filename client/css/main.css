@@ -413,7 +413,7 @@ input, select, textarea { font-family: inherit; }
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 80px);
-  padding: 1.5rem;
+  padding: 6rem 1.5rem 2rem; /* Added top padding for fixed navbar */
   position: relative;
   overflow: hidden;
   background: var(--bg-gradient);
@@ -471,7 +471,11 @@ input, select, textarea { font-family: inherit; }
 .blob-2 { bottom: -100px; left: -100px; }
 
 /* ── Dashboard & Pages ─────────────────────────────────────── */
-.dashboard, .search-page, .profile-page { padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; }
+.dashboard, .search-page, .profile-page { 
+  padding: 7rem 2rem 3rem; /* Increased top padding for fixed navbar */
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
 .dashboard-greeting h1, .search-page h1, .profile-page h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
 .dashboard-greeting p { color: var(--muted); font-size: 1.1rem; margin-bottom: 3rem; }
 
@@ -991,7 +995,7 @@ input, select, textarea { font-family: inherit; }
   .form-row-mobile { grid-template-columns: 1fr; }
 
   /* Auth page */
-  .auth-page { padding: 1.2rem; min-height: calc(100svh - 60px); }
+  .auth-page { padding: 5rem 1.2rem 2rem; min-height: calc(100svh - 60px); }
   .auth-card { padding: 2rem 1.5rem; }
 
   /* Admin sidebar collapses */
