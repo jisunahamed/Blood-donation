@@ -1,0 +1,374 @@
+/* ============================================================
+   Landing Page Dark Theme & Glassmorphism Styles
+   ============================================================ */
+
+.dark-theme {
+  --bg-color: #0A0A14;
+  --text: #FDFDFE;
+  --muted: #A0A0B0;
+  --surface: rgba(20, 20, 30, 0.6);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --red-gradient: linear-gradient(135deg, #ff4d4d 0%, #ff2e2e 100%);
+  --red-solid: #ff2e2e;
+  font-family: 'Hind Siliguri', var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Navbar Overrides in Dark Theme */
+.dark-theme #main-nav {
+  background: rgba(10, 10, 20, 0.8) !important;
+  border-bottom: 1px solid var(--surface-border) !important;
+}
+.dark-theme .nav-link {
+  color: #E0E0E0 !important;
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 500;
+}
+.dark-theme .nav-link:hover {
+  color: #FFFFFF !important;
+}
+.dark-theme .nav-title {
+  color: #FFFFFF !important;
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* Hero Section */
+.hero-dark {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 5% 4rem;
+  background-image: url('../img/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.hero-dark::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, rgba(10, 10, 20, 0.95) 0%, rgba(10, 10, 20, 0.7) 50%, rgba(10, 10, 20, 0.4) 100%);
+  z-index: -1;
+}
+
+.hero-dark-content {
+  max-width: 800px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-dark-content h1 {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.hero-dark-content h1 .text-red {
+  color: var(--red-solid);
+  text-shadow: 0 0 20px rgba(255, 46, 46, 0.4);
+}
+
+.hero-dark-content p {
+  font-size: 1.25rem;
+  color: #D0D0E0;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
+.hero-actions-dark {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-red-glow {
+  background: var(--red-gradient);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(255, 46, 46, 0.3);
+  transition: all 0.3s ease;
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  border-radius: var(--radius-pill);
+}
+
+.btn-red-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 46, 46, 0.5);
+  color: white;
+}
+
+.btn-glass-outline {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  padding: 0.8rem 2rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+
+.btn-glass-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  color: white;
+}
+
+.trust-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(5px);
+  font-size: 0.9rem;
+  color: #E0E0E0;
+  margin-bottom: 2rem;
+}
+
+.trust-indicator svg {
+  color: var(--red-solid);
+}
+
+/* Features Section */
+.features-dark {
+  padding: 6rem 5%;
+  background: var(--bg-color);
+  position: relative;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card-dark {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card-dark::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 46, 46, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.feature-card-dark:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255, 46, 46, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 46, 46, 0.1);
+}
+
+.feature-card-dark:hover::before {
+  opacity: 1;
+}
+
+.feature-card-dark > * {
+  position: relative;
+  z-index: 1;
+}
+
+.feature-icon-dark {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 46, 46, 0.1);
+  color: var(--red-solid);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.feature-card-dark:hover .feature-icon-dark {
+  background: var(--red-gradient);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 46, 46, 0.4);
+}
+
+.feature-card-dark h3 {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 1.4rem;
+  margin-bottom: 0;
+  color: #FFFFFF;
+}
+
+/* Impact Section */
+.impact-dark {
+  padding: 2rem 5% 6rem;
+  background: var(--bg-color);
+}
+
+.impact-glass-card {
+  max-width: 1000px;
+  margin: -8rem auto 0; /* Overlaps with hero if placed immediately after, but here we put it after features, let's adjust */
+  background: rgba(20, 20, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(20px);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10;
+}
+
+/* If impact is overlapping hero bottom: */
+.overlap-card {
+  margin-top: -6rem;
+}
+
+.impact-stat {
+  text-align: center;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.impact-stat:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .impact-stat:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.impact-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--red-solid);
+}
+
+.impact-text h4 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.impact-text p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Emotional Quote Section */
+.quote-dark {
+  padding: 6rem 5%;
+  background: radial-gradient(circle at center, rgba(255, 46, 46, 0.08) 0%, var(--bg-color) 70%);
+  text-align: center;
+  position: relative;
+}
+
+.quote-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quote-icon {
+  font-size: 3rem;
+  color: var(--red-solid);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.quote-text {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-size: 2.2rem;
+  line-height: 1.4;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+/* Footer Dark */
+.footer-dark {
+  padding: 4rem 5% 2rem;
+  background: #05050A;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+}
+
+.footer-dark p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icons a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  background: var(--red-solid);
+  transform: translateY(-3px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Overriding Body styles just for landing page container */
+.landing-wrapper {
+  background-color: var(--bg-color);
+}
