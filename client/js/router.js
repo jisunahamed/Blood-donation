@@ -37,7 +37,7 @@ async function router() {
     if (!profile || !profile.blood_group) {
       // Try fetching from backend to be sure
       try {
-        const { data: profileData } = await api.get('/users/me');
+        const profileData = await api.get('/users/me');
         profile = profileData;
         localStorage.setItem('profile', JSON.stringify(profile));
       } catch (err) {
