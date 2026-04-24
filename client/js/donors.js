@@ -108,7 +108,7 @@ async function searchDonors() {
 async function copyContact(donorId) {
   try {
     showSpinner();
-    const data = await api.post(`/donors/${donorId}/contact`, {});
+    const data = await api.post('/interactions/copy', { target_id: donorId });
     _donorState.revealedContacts[donorId] = data.contact_number;
     try { await navigator.clipboard.writeText(data.contact_number); } catch (_) {}
     showToast('যোগাযোগ নম্বর দেখানো হচ্ছে!');
@@ -138,7 +138,7 @@ async function confirmDonation(donorId) {
   closeModal();
   showSpinner();
   try {
-    await api.post(`/donors/${donorId}/donation`, {});
+    await api.post('/donations/confirm', { donor_id: donorId });
     showToast('রক্তদান নিশ্চিত হয়েছে!');
     renderDashboard();
   } catch (err) {
