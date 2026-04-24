@@ -1,92 +1,114 @@
+// ============================================================
+// Dashboard Page — Bengali UI, Premium Design
+// ============================================================
+
 async function renderDashboard() {
   const app = document.getElementById('app');
-  app.innerHTML = `<div class="page-container"><div class="spinner-drop"></div></div>`;
+  app.innerHTML = `
+    <div class="page-container">
+      <div class="page-loading">
+        <div class="spinner-drop"></div>
+        <span>লোড হচ্ছে...</span>
+      </div>
+    </div>`;
 
   try {
-    const profile = JSON.parse(localStorage.getItem('profile'));
-    const requests = await api.get('/blood-requests');
-    const myRequests = requests.filter(r => r.user_id === profile.id);
+    const data = await api.get('/users/me/dashboard');
+
+    const availText = !data.is_available && data.days_until_available > 0
+      ? `<span class="text-red">আরও ${data.days_until_available} দিন পর</span>`
+      : `<span class="avail-ready">✓ প্রস্তুত</span>`;
 
     app.innerHTML = `
       <div class="page-container">
-        <!-- GREETING SECTION -->
-        <div class="dashboard-header" style="margin-bottom: 2rem;">
-          <div class="greeting-content">
-            <h1 class="greeting-name">হ্যালো, ${profile.name.split(' ')[0]}! 👋</h1>
-            <p class="greeting-sub">আজকের দিনটি ভালো কাটুক। আপনার রক্তদানে বাঁচতে পারে একটি প্রাণ।</p>
+        <!-- Greeting -->
+        <div class="greeting-section">
+          <div class="greeting-left">
+            <p class="greeting-sub">স্বাগতম 👋</p>
+            <h1 class="greeting-name">${data.name} ${bloodBadge(data.blood_group)}</h1>
+          </div>
+          <a href="#/search" class="floating-action-btn">
+            🩸 রক্ত খুঁজুন
+          </a>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="status-cards">
+          <div class="status-card">
+            <div class="status-icon">🩸</div>
+            <div class="status-info">
+              <span class="status-label">সর্বশেষ দান</span>
+              <span class="status-value">${formatDate(data.last_donation_date)}</span>
+            </div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon">💉</div>
+            <div class="status-info">
+              <span class="status-label">সর্বশেষ গ্রহণ</span>
+              <span class="status-value">${formatDate(data.last_received_date)}</span>
+            </div>
+          </div>
+          <div class="status-card ${data.is_available ? 'status-available' : 'status-busy'}">
+            <div class="status-icon">${data.is_available ? '✅' : '⏳'}</div>
+            <div class="status-info">
+              <span class="status-label">অবস্থা</span>
+              <span class="status-value">${data.is_available ? 'দান করতে পারব' : 'বিরতিতে আছি'}</span>
+              <span class="status-sub">${availText}</span>
+            </div>
           </div>
         </div>
 
-        <!-- STATUS CARDS -->
-        <div class="status-cards" style="margin-bottom: 2rem;">
-          <div class="stat-card">
-            <div class="stat-icon" style="background: rgba(255, 46, 46, 0.1); color: #ff2e2e;">🩸</div>
-            <div class="stat-info">
-              <span class="stat-value">${profile.blood_group || 'N/A'}</span>
-              <span class="stat-label">আপনার রক্ত গ্রুপ</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon" style="background: rgba(52, 199, 89, 0.1); color: #28a745;">✅</div>
-            <div class="stat-info">
-              <span class="stat-value">${profile.is_available ? 'সক্রিয়' : 'নিষ্ক্রিয়'}</span>
-              <span class="stat-label">ডোনার স্ট্যাটাস</span>
-            </div>
-          </div>
+        <!-- Network History -->
+        <div class="section-header">
+          <h2 class="section-title">📋 যোগাযোগ ইতিহাস</h2>
+        </div>
+        <div class="section-card">
+          ${data.network_history.length === 0
+            ? `<div class="empty-state">
+                <div class="empty-icon">🔗</div>
+                <p>এখনো কারো সাথে যোগাযোগ হয়নি।<br/>ডোনার খুঁজে যোগাযোগ শুরু করুন।</p>
+                <a href="#/search" class="btn btn-primary btn-sm">ডোনার খুঁজুন</a>
+               </div>`
+            : `<div class="network-list">
+                ${data.network_history.map(n => {
+                  const nameDisplay = n.contact?.hide_name ? 'পরিচয় গোপন' : (n.contact?.name || 'অজানা');
+                  return `
+                  <div class="network-item">
+                    <div class="network-avatar">${(nameDisplay[0] || '?').toUpperCase()}</div>
+                    <div class="network-info">
+                      <span class="network-name">${nameDisplay}${n.contact?.department ? ` <small>(${n.contact.department})</small>` : ''}</span>
+                      <span class="network-meta">${bloodBadge(n.contact?.blood_group)} &nbsp; ${formatDateTime(n.last_contact_at)}</span>
+                    </div>
+                    <button class="btn-donated" onclick="openDonationModal('${n.contact_id}')">✓ পেয়েছি</button>
+                  </div>`;
+                }).join('')}
+              </div>`
+          }
         </div>
 
-        <!-- RECENT REQUESTS SECTION -->
-        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
-          <h2 style="font-size: 1.25rem; font-weight: 800; font-family: 'Hind Siliguri', sans-serif;">জরুরী রক্তের আবেদন</h2>
-          <a href="#/search" style="font-size: 0.85rem; font-weight: 700; color: #ff2e2e; text-decoration: none;">সবগুলো দেখুন</a>
+        <!-- Recent Activity -->
+        <div class="section-header" style="margin-top: 2rem;">
+          <h2 class="section-title">📜 সাম্প্রতিক কার্যক্রম</h2>
         </div>
-
-        <div class="requests-list">
-          ${requests.length === 0 ? `
-            <div class="empty-state">
-              <div class="empty-icon">📭</div>
-              <p>বর্তমানে কোনো রক্তের আবেদন নেই।</p>
-            </div>
-          ` : requests.slice(0, 5).map(req => `
-            <div class="request-card">
-              <div class="req-header">
-                <div class="req-blood-badge">${req.blood_group}</div>
-                <div class="req-meta">
-                  <span class="req-location">📍 ${req.location}</span>
-                  <span class="req-date">📅 ${new Date(req.created_at).toLocaleDateString('bn-BD')}</span>
-                </div>
-              </div>
-              <p class="req-reason">${req.reason || 'জরুরী রক্ত প্রয়োজন'}</p>
-              <div class="req-footer">
-                <a href="tel:${req.contact_phone}" class="btn btn-primary" style="flex: 1; text-align: center; font-size: 0.9rem;">যোগাযোগ করুন</a>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-
-        <!-- MY ACTIVITY SECTION -->
-        <div class="section-header" style="margin: 2.5rem 0 1.2rem;">
-          <h2 style="font-size: 1.25rem; font-weight: 800; font-family: 'Hind Siliguri', sans-serif;">আপনার সাম্প্রতিক কার্যক্রম</h2>
-        </div>
-        
-        <div class="activity-list">
-           ${myRequests.length === 0 ? `
-            <div class="activity-card" style="text-align: center; color: var(--muted); padding: 1.5rem;">
-              আপনার কোনো সাম্প্রতিক আবেদন নেই।
-            </div>
-           ` : myRequests.slice(0, 3).map(req => `
-            <div class="activity-item">
-              <div class="activity-icon">📢</div>
-              <div class="activity-details">
-                <p class="activity-title">${req.blood_group} রক্তের জন্য আবেদন করেছেন</p>
-                <p class="activity-time">${new Date(req.created_at).toLocaleString('bn-BD')}</p>
-              </div>
-            </div>
-           `).join('')}
+        <div class="section-card">
+          ${data.activity_log.length === 0
+            ? `<div class="empty-state"><div class="empty-icon">📭</div><p>কোনো কার্যক্রম নেই।</p></div>`
+            : `<div class="activity-feed">
+                ${data.activity_log.map(a => `
+                  <div class="activity-item">
+                    <div class="activity-dot"></div>
+                    <div>
+                      <div class="activity-text">${activityLabel(a.activity_type)}</div>
+                      <div class="activity-time">${formatDateTime(a.created_at)}</div>
+                    </div>
+                  </div>`).join('')}
+              </div>`
+          }
         </div>
       </div>
     `;
   } catch (err) {
-    showToast('ড্যাশবোর্ড লোড করতে সমস্যা হয়েছে', 'error');
+    app.innerHTML = `<div class="page-container"><div class="empty-state"><div class="empty-icon">⚠️</div><p>${err.message}</p></div></div>`;
+    showToast(err.message, 'error');
   }
 }
