@@ -223,8 +223,8 @@ async function updateNav() {
   } else {
     navLinks.innerHTML = `
       <a href="#/" class="nav-link ${hash === '/' ? 'active' : ''}">হোম</a>
-      <a href="#/" class="nav-link">ডোনেট করুন</a>
-      <a href="#/" class="nav-link" style="margin-right: 1rem;">রক্তের প্রয়োজন</a>
+      <a href="#/register" class="nav-link">ডোনেট করুন</a>
+      <a href="#/login" class="nav-link" style="margin-right: 1rem;">রক্তের প্রয়োজন</a>
       <a href="#/login" class="nav-link" style="font-weight:600;">লগইন করুন</a>
       <a href="#/register" class="${isDark ? 'btn-red-glow' : 'btn btn-primary btn-glow'}" style="text-decoration:none; padding: 0.5rem 1.5rem;">সাইন আপ করুন</a>
     `;
