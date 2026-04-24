@@ -80,31 +80,26 @@ app.get('/api/public/stats', async (_req, res) => {
     // Total users
     const { count: total_users } = await supabase
       .from('profiles')
-      .select('*', { count: 'exact', head: true })
+      .select('id', { count: 'exact', head: true })
       .is('deleted_at', null);
 
     // Active donors
     const { count: active_donors } = await supabase
       .from('profiles')
-      .select('*', { count: 'exact', head: true })
+      .select('id', { count: 'exact', head: true })
       .eq('is_available', true)
       .is('deleted_at', null);
 
-    // Donations this month
-    const startOfMonth = new Date();
-    startOfMonth.setDate(1);
-    startOfMonth.setHours(0, 0, 0, 0);
     // Total donations ever
     const { count: total_donations } = await supabase
       .from('donations')
-      .select('*', { count: 'exact', head: true });
+      .select('id', { count: 'exact', head: true });
 
     res.json({
       success: true,
       data: {
         total_users: total_users || 0,
         active_donors: active_donors || 0,
-        donations_this_month: donations_this_month || 0,
         total_donations: total_donations || 0,
       },
     });
