@@ -13,11 +13,11 @@ router.get('/search', async (req, res) => {
 
     let query = supabase
       .from('profiles')
-      .select('id, name, blood_group, is_available, locations(name, zone)')
+      .select('id, blood_group, is_available, locations(name, zone), department')
       .eq('is_available', true)
       .is('deleted_at', null)
       .neq('id', req.user.id)
-      .order('name', { ascending: true })
+      .order('created_at', { ascending: false })
       .limit(50);
 
     if (blood_group) {
@@ -35,8 +35,8 @@ router.get('/search', async (req, res) => {
     // Map to include location_name for convenience
     const donors = (data || []).map(d => ({
       id: d.id,
-      name: d.name,
       blood_group: d.blood_group,
+      department: d.department,
       is_available: d.is_available,
       location_name: d.locations ? d.locations.name : 'Unknown',
       location_zone: d.locations ? d.locations.zone : 'Unknown',

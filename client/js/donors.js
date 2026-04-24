@@ -66,15 +66,16 @@ async function searchDonors() {
         : d.blood_group?.startsWith('B') ? '#27AE60'
         : d.blood_group?.startsWith('AB') ? '#8E44AD' : '#C0392B';
 
-      const initials = d.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+      const initials = d.blood_group;
       const revealed = _donorState.revealedContacts[d.id];
+      const deptDisplay = d.department ? `<span style="font-size: 0.8rem; color: var(--muted); margin-left: 0.5rem;">(${d.department})</span>` : '';
 
       return `
         <div class="card donor-card glass-card" data-donor-id="${d.id}">
           <div class="donor-info">
             <div class="donor-avatar" style="background:${avatarColor}">${initials}</div>
             <div>
-              <div class="donor-name">${d.name}</div>
+              <div class="donor-name">Anonymous Donor ${deptDisplay}</div>
               <div class="donor-location">📍 ${d.location_name}</div>
             </div>
           </div>
@@ -85,7 +86,7 @@ async function searchDonors() {
           ${revealed ? `
             <div class="contact-reveal">📞 ${revealed}</div>
             <div class="donor-actions">
-              <button class="btn btn-success btn-sm" onclick="openDonationModal('${d.id}','${d.name}')">✓ Mark as Donated</button>
+              <button class="btn btn-success btn-sm" onclick="openDonationModal('${d.id}')">✓ Mark as Donated</button>
             </div>
           ` : `
             <div class="donor-actions">
@@ -106,7 +107,7 @@ async function copyContact(targetId) {
   try {
     const data = await api.post('/interactions/copy', { target_id: targetId });
     _donorState.revealedContacts[targetId] = data.contact_number;
-    showToast(`Contact for ${data.name} copied!`);
+    showToast('Contact copied successfully!');
     searchDonors(); // Re-render to show contact
   } catch (err) {
     showToast(err.message, 'error');
@@ -115,13 +116,13 @@ async function copyContact(targetId) {
   }
 }
 
-function openDonationModal(donorId, donorName) {
+function openDonationModal(donorId) {
   showModal(`
     <div class="modal-header">
       <h3>Confirm Blood Donation</h3>
       <button class="modal-close" onclick="hideModal()">×</button>
     </div>
-    <p>Confirm that <strong>${donorName}</strong> donated blood to you?</p>
+    <p>Confirm that this anonymous donor donated blood to you?</p>
     <div class="form-group mt-2">
       <label class="form-label" for="donation-notes">Notes (optional)</label>
       <textarea class="form-input" id="donation-notes" rows="3" placeholder="Any notes about this donation…"></textarea>

@@ -104,7 +104,7 @@ router.get('/me/dashboard', async (req, res) => {
     // Network history (last 10)
     const { data: network, error: nErr } = await supabase
       .from('network_history')
-      .select('*, contact:contact_id(id, name, blood_group)')
+      .select('*, contact:contact_id(id, blood_group, department)')
       .eq('user_id', userId)
       .order('last_contact_at', { ascending: false })
       .limit(10);

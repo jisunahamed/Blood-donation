@@ -6,6 +6,7 @@ const routes = {
   '/': renderLanding,
   '/login': renderLogin,
   '/register': renderRegister,
+  '/complete-profile': renderCompleteProfile,
   '/dashboard': renderDashboard,
   '/search': renderDonors,
   '/profile': renderProfile,
@@ -22,6 +23,29 @@ async function router() {
     const { data } = await supabaseClient.auth.getSession();
     if (!data?.session) {
       window.location.hash = '#/login';
+      return;
+    }
+    
+    // Check if profile exists
+    let profile = JSON.parse(localStorage.getItem('profile') || 'null');
+    if (!profile || !profile.blood_group) {
+      // Try fetching from backend to be sure
+      try {
+        const { data: profileData } = await api.get('/users/me');
+        profile = profileData;
+        localStorage.setItem('profile', JSON.stringify(profile));
+      } catch (err) {
+        // If profile fetch fails (e.g. 401/404 because it doesn't exist), redirect to complete-profile
+        window.location.hash = '#/complete-profile';
+        return;
+      }
+    }
+  }
+
+  if (hash === '/login' || hash === '/register') {
+    const { data } = await supabaseClient.auth.getSession();
+    if (data?.session) {
+      window.location.hash = '#/dashboard';
       return;
     }
   }

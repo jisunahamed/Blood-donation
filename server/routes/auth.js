@@ -158,4 +158,66 @@ router.post('/logout', async (req, res) => {
   }
 });
 
+// ── POST /api/auth/complete-profile ─────────────────────────
+router.post('/complete-profile', [
+  body('blood_group').isIn(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).withMessage('Valid blood group is required'),
+  body('contact_number').trim().notEmpty().withMessage('Contact number is required'),
+  body('location_id').isUUID().withMessage('Valid location is required'),
+  body('department').optional(),
+], handleValidationErrors, async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, message: 'Missing token', code: 'UNAUTHORIZED' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+
+    if (error || !user) {
+      return res.status(401).json({ success: false, message: 'Invalid token', code: 'UNAUTHORIZED' });
+    }
+
+    const { blood_group, contact_number, location_id, department } = req.body;
+
+    // Check if profile already exists
+    const { data: existing } = await supabase.from('profiles').select('id').eq('id', user.id).single();
+    if (existing) {
+      return res.status(400).json({ success: false, message: 'Profile already exists', code: 'PROFILE_EXISTS' });
+    }
+
+    const name = user.user_metadata?.full_name || user.user_metadata?.name || 'Unknown User';
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .insert({
+        id: user.id,
+        name: name,
+        blood_group,
+        location_id,
+        contact_number,
+        department: department || null,
+        is_admin: false,
+      })
+      .select('*, locations(name, zone)')
+      .single();
+
+    if (profileError) throw profileError;
+
+    // Log activity
+    await supabase.from('activity_log').insert({
+      user_id: user.id,
+      activity_type: 'account_created',
+      reference_id: user.id,
+      reference_type: 'profile',
+      meta: { email: user.email, provider: 'oauth' },
+    });
+
+    res.json({ success: true, data: { profile } });
+  } catch (err) {
+    console.error('Complete profile error:', err);
+    res.status(500).json({ success: false, message: 'Failed to complete profile', code: 'COMPLETE_PROFILE_ERROR' });
+  }
+});
+
 module.exports = router;

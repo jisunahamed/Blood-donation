@@ -67,7 +67,7 @@ router.post('/copy', [
     // 4. Fetch target contact number
     const { data: target, error: targetErr } = await supabase
       .from('profiles')
-      .select('contact_number, name')
+      .select('contact_number')
       .eq('id', target_id)
       .single();
 
@@ -79,7 +79,6 @@ router.post('/copy', [
       success: true,
       data: {
         contact_number: target.contact_number,
-        name: target.name,
       },
     });
   } catch (err) {
