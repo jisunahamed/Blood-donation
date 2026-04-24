@@ -7,27 +7,30 @@ async function renderLogin() {
   app.innerHTML = `
     <div class="auth-page">
       <div class="blob blob-1"></div>
-      <div class="blob blob-2" style="bottom: 0; left: 0;"></div>
-      <div class="auth-card glass-card">
-        <h2>Welcome Back</h2>
-        <p class="auth-subtitle">Sign in to find donors and save lives</p>
+      <div class="blob blob-2"></div>
+      <div class="auth-card">
+        <h2>ফিরে আসার জন্য ধন্যবাদ</h2>
+        <p class="auth-subtitle">আপনার একাউন্টে লগইন করুন</p>
         <form id="login-form">
-          <div class="form-group">
-            <label class="form-label" for="login-email">Email</label>
-            <input class="form-input" type="email" id="login-email" placeholder="you@example.com" required />
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">ইমেইল</label>
+            <input class="form-input" type="email" id="login-email" placeholder="example@email.com" required />
           </div>
-          <div class="form-group">
-            <label class="form-label" for="login-password">Password</label>
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">পাসওয়ার্ড</label>
             <input class="form-input" type="password" id="login-password" placeholder="••••••••" required />
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+          <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 1rem;">লগইন করুন</button>
         </form>
-        <div style="margin: 1rem 0; text-align: center; color: var(--muted); font-size: 0.9rem;">OR</div>
-        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" onclick="handleGoogleLogin()">
-          <svg style="width:18px;height:18px" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.36,22 12.22,22C17.74,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" /></svg>
-          Continue with Google
+        <div style="margin: 1.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative;">
+          <span style="background: #fff; padding: 0 0.5rem; position: relative; z-index: 1;">অথবা</span>
+          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border);"></div>
+        </div>
+        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;" onclick="handleGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
+          গুগল দিয়ে লগইন
         </button>
-        <p class="auth-link mt-2">Don't have an account? <a href="#/register">Register here</a></p>
+        <p class="auth-link">একাউন্ট নেই? <a href="#/register">নতুন একাউন্ট খুলুন</a></p>
       </div>
     </div>
   `;
@@ -67,70 +70,73 @@ async function renderRegister() {
   app.innerHTML = `
     <div class="auth-page">
       <div class="blob blob-1"></div>
-      <div class="blob blob-2" style="bottom: 0; left: 0;"></div>
-      <div class="auth-card glass-card" style="max-width: 500px;">
-        <h2>Create Account</h2>
-        <p class="auth-subtitle">Join the community of life-savers</p>
+      <div class="blob blob-2"></div>
+      <div class="auth-card" style="max-width: 500px;">
+        <h2>নতুন একাউন্ট</h2>
+        <p class="auth-subtitle">জীবন বাঁচাতে আজই আমাদের সাথে যুক্ত হোন</p>
         <form id="register-form">
-          <div class="form-group">
-            <label class="form-label" for="reg-name">Full Name *</label>
-            <input class="form-input" type="text" id="reg-name" placeholder="Your full name" required />
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">পুরো নাম *</label>
+            <input class="form-input" type="text" id="reg-name" placeholder="আপনার নাম লিখুন" required />
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="reg-email">Email *</label>
-              <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="reg-contact">Contact Number *</label>
+          
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">ইমেইল *</label>
+            <input class="form-input" type="email" id="reg-email" placeholder="example@email.com" required />
+          </div>
+
+          <div class="form-row-mobile">
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label">মোবাইল নম্বর *</label>
               <input class="form-input" type="tel" id="reg-contact" placeholder="01XXXXXXXXX" required />
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="reg-password">Password *</label>
-              <input class="form-input" type="password" id="reg-password" placeholder="Min. 6 characters" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="reg-confirm">Confirm Password *</label>
-              <input class="form-input" type="password" id="reg-confirm" placeholder="Re-enter password" required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="reg-blood">Blood Group *</label>
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label">রক্তের গ্রুপ *</label>
               <select class="form-select" id="reg-blood" required>
-                <option value="">Select</option>
+                <option value="">নির্বাচন করুন</option>
                 <option>A+</option><option>A-</option>
                 <option>B+</option><option>B-</option>
                 <option>AB+</option><option>AB-</option>
                 <option>O+</option><option>O-</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="reg-location">Location *</label>
-              <select class="form-select" id="reg-location" required>
-                <option value="">Select</option>
-                ${locations.map(l => `<option value="${l.id}">${l.name} (${l.zone})</option>`).join('')}
-              </select>
+          </div>
+
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">লোকেশন *</label>
+            <select class="form-select" id="reg-location" required>
+              <option value="">নির্বাচন করুন</option>
+              ${locations.map(l => `<option value="${l.id}">${l.name} (${l.zone})</option>`).join('')}
+            </select>
+          </div>
+
+          <div class="form-row-mobile">
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label">পাসওয়ার্ড *</label>
+              <input class="form-input" type="password" id="reg-password" placeholder="কমপক্ষে ৬ অক্ষর" required />
+            </div>
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label">পাসওয়ার্ড নিশ্চিত করুন *</label>
+              <input class="form-input" type="password" id="reg-confirm" placeholder="আবার লিখুন" required />
             </div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="reg-dept">Department <small>(optional)</small></label>
-            <input class="form-input" type="text" id="reg-dept" placeholder="e.g. CSE, MBA" />
+
+          <div class="form-group" style="display: flex; align-items: center; gap: 0.6rem; margin: 1.2rem 0; text-align: left;">
+            <input type="checkbox" id="reg-hide-name" style="width:18px;height:18px;cursor:pointer;" />
+            <label for="reg-hide-name" style="margin:0;cursor:pointer;font-size:0.85rem;color:var(--muted);">আমার নাম গোপন রাখুন (অ্যানোনিমাস প্রোফাইল)</label>
           </div>
-          <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
-            <input type="checkbox" id="reg-hide-name" style="width:16px;height:16px;" />
-            <label for="reg-hide-name" style="margin:0;cursor:pointer;">Hide my name (Make profile anonymous)</label>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+          
+          <button type="submit" class="btn btn-primary" style="width:100%">একাউন্ট খুলুন</button>
         </form>
-        <div style="margin: 1rem 0; text-align: center; color: var(--muted); font-size: 0.9rem;">OR</div>
-        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;" onclick="handleGoogleLogin()">
-          <svg style="width:18px;height:18px" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.36,22 12.22,22C17.74,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" /></svg>
-          Continue with Google
+        <div style="margin: 1.5rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; position: relative;">
+          <span style="background: #fff; padding: 0 0.5rem; position: relative; z-index: 1;">অথবা</span>
+          <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border);"></div>
+        </div>
+        <button class="btn btn-secondary glass-btn" style="width:100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;" onclick="handleGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18" alt="Google">
+          গুগল দিয়ে সাইন আপ
         </button>
-        <p class="auth-link mt-2">Already registered? <a href="#/login">Login here</a></p>
+        <p class="auth-link">ইতিমধ্যে একাউন্ট আছে? <a href="#/login">লগইন করুন</a></p>
       </div>
     </div>
   `;
@@ -195,43 +201,43 @@ async function renderCompleteProfile() {
   app.innerHTML = `
     <div class="auth-page">
       <div class="blob blob-1"></div>
-      <div class="blob blob-2" style="bottom: 0; left: 0;"></div>
-      <div class="auth-card glass-card">
-        <h2>Complete Profile</h2>
-        <p class="auth-subtitle">Just a few more details to join the network.</p>
+      <div class="blob blob-2"></div>
+      <div class="auth-card">
+        <h2>প্রোফাইল সম্পন্ন করুন</h2>
+        <p class="auth-subtitle">আমাদের নেটওয়ার্কে যোগ দিতে কিছু তথ্য প্রয়োজন</p>
         <form id="complete-profile-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="cp-blood">Blood Group *</label>
+          <div class="form-row-mobile">
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label">রক্তের গ্রুপ *</label>
               <select class="form-select" id="cp-blood" required>
-                <option value="">Select</option>
+                <option value="">নির্বাচন করুন</option>
                 <option>A+</option><option>A-</option>
                 <option>B+</option><option>B-</option>
                 <option>AB+</option><option>AB-</option>
                 <option>O+</option><option>O-</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="cp-location">Location *</label>
+            <div class="form-group" style="text-align: left;">
+              <label class="form-label">লোকেশন *</label>
               <select class="form-select" id="cp-location" required>
-                <option value="">Select</option>
+                <option value="">নির্বাচন করুন</option>
                 ${locations.map(l => `<option value="${l.id}">${l.name} (${l.zone})</option>`).join('')}
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="cp-contact">Contact Number *</label>
-            <input class="form-input" type="tel" id="cp-contact" placeholder="e.g. 01XXXXXXXXX" required />
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">মোবাইল নম্বর *</label>
+            <input class="form-input" type="tel" id="cp-contact" placeholder="01XXXXXXXXX" required />
           </div>
-          <div class="form-group">
-            <label class="form-label" for="comp-dept">Department <small>(optional)</small></label>
-            <input class="form-input" type="text" id="comp-dept" placeholder="e.g. CSE, BBA" />
+          <div class="form-group" style="text-align: left;">
+            <label class="form-label">ডিপার্টমেন্ট <small>(ঐচ্ছিক)</small></label>
+            <input class="form-input" type="text" id="comp-dept" placeholder="যেমন: CSE, BBA" />
           </div>
-          <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
-            <input type="checkbox" id="comp-hide-name" style="width:16px;height:16px;" />
-            <label for="comp-hide-name" style="margin:0;cursor:pointer;">Hide my name (Make profile anonymous)</label>
+          <div class="form-group" style="display: flex; align-items: center; gap: 0.6rem; margin: 1.2rem 0; text-align: left;">
+            <input type="checkbox" id="comp-hide-name" style="width:18px;height:18px;cursor:pointer;" />
+            <label for="comp-hide-name" style="margin:0;cursor:pointer;font-size:0.85rem;color:var(--muted);">আমার নাম গোপন রাখুন (অ্যানোনিমাস প্রোফাইল)</label>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%">Save Profile</button>
+          <button type="submit" class="btn btn-primary" style="width:100%">প্রোফাইল সেভ করুন</button>
         </form>
       </div>
     </div>
