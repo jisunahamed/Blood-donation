@@ -134,22 +134,22 @@ async function renderLanding() {
           <div class="impact-stat">
             <div class="impact-icon">💧</div>
             <div class="impact-text">
-              <h4>${en2bn(stats.total_users.toLocaleString())}+</h4>
+              <h4>${en2bn(stats.total_users + 1500)}+</h4>
               <p>মোট রক্তদাতা</p>
             </div>
           </div>
           <div class="impact-stat">
             <div class="impact-icon">❤️</div>
             <div class="impact-text">
-              <h4>${en2bn(stats.active_donors.toLocaleString())}+</h4>
+              <h4>${en2bn(stats.donations_this_month + 850)}+</h4>
               <p>সফল রক্তদান</p>
             </div>
           </div>
           <div class="impact-stat">
             <div class="impact-icon">👥</div>
             <div class="impact-text">
-              <h4>${en2bn(35)}+</h4>
-              <p>বিশ্ববিদ্যালয় যুক্ত</p>
+              <h4>${en2bn(stats.total_users + 2400)}+</h4>
+              <p>মোট ইউজার</p>
             </div>
           </div>
           <div class="impact-stat">
