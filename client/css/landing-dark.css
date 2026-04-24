@@ -56,8 +56,8 @@
 
 @media (min-width: 1024px) {
   .hero-dark {
-    background-size: 100% auto; /* Zoom out effect for desktop */
-    background-position: center 20%;
+    background-size: cover; /* Ensure it fulfills the space */
+    background-position: center 25%;
   }
 }
 

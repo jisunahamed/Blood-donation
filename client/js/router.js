@@ -31,6 +31,13 @@ async function router() {
   const hash = rawHash.slice(1) || '/';
   const route = routes[hash];
 
+  // Set body theme
+  if (hash === '/') {
+    document.body.classList.add('dark-body');
+  } else {
+    document.body.classList.remove('dark-body');
+  }
+
   if (authRequired.includes(hash)) {
     const { data } = await supabaseClient.auth.getSession();
     if (!data?.session) {

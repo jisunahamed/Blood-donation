@@ -59,6 +59,11 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
   overflow-x: hidden;
+  transition: background-color 0.3s ease;
+}
+body.dark-body {
+  background: #0A0A14 !important;
+  background-image: none !important;
 }
 
 h1, h2, h3, h4, h5 { font-family: var(--font-heading); font-weight: 700; color: var(--dark); line-height: 1.2; letter-spacing: -0.02em; }
@@ -112,9 +117,11 @@ input, select, textarea { font-family: inherit; }
   transition: all 0.3s ease;
 }
 .dark-theme .navbar {
-  background: rgba(15, 15, 25, 0.8);
+  background: rgba(15, 15, 25, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 .dark-theme .nav-title { color: #FFFFFF; }
 .dark-theme .nav-links a { color: rgba(255, 255, 255, 0.7); }
