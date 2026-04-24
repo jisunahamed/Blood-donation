@@ -184,12 +184,10 @@ async function renderLanding() {
 
       <!-- FOOTER -->
       <footer class="footer-dark">
-        <div class="social-icons">
-          <a href="#">FB</a>
-          <a href="#">IG</a>
-          <a href="#">X</a>
-        </div>
-        <p style="margin-top: 1.5rem;">&copy; ${new Date().getFullYear()} রক্তসেতু — ক্যাম্পাস থেকে মানবতার পথে।</p>
+        <p style="margin-top: 1.5rem; font-size: 1.1rem;">
+          &copy; ${new Date().getFullYear()} রক্তসেতু — ক্যাম্পাস থেকে মানবতার পথে。<br/>
+          <span style="font-size: 0.9rem; color: var(--muted); margin-top: 0.5rem; display: block;">Built by Tongi Govt. College's Students</span>
+        </p>
       </footer>
 
     </div>
