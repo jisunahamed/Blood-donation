@@ -30,7 +30,7 @@ async function router() {
     let profileStr = localStorage.getItem('profile');
     let profile = null;
     try {
-      profile = profileStr && profileStr !== 'undefined' ? JSON.parse(profileStr) : null;
+      profile = (profileStr && profileStr !== 'undefined' && profileStr !== 'null') ? JSON.parse(profileStr) : null;
     } catch (e) {
       profile = null;
     }
@@ -131,7 +131,9 @@ async function updateNav() {
   const navLinks = document.getElementById('nav-links');
   const { data } = await supabaseClient.auth.getSession();
   const profileStr = localStorage.getItem('profile');
-  const profile = (profileStr && profileStr !== 'undefined') ? JSON.parse(profileStr) : {};
+  let profile = {};
+  try { profile = (profileStr && profileStr !== 'undefined' && profileStr !== 'null') ? JSON.parse(profileStr) : {}; } catch(e){}
+  profile = profile || {};
   const hash = window.location.hash.slice(1) || '/';
 
   if (data?.session) {

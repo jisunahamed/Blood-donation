@@ -6,7 +6,9 @@ let _adminTab = 'dashboard';
 
 async function renderAdmin() {
   const profileStr = localStorage.getItem('profile');
-  const profile = (profileStr && profileStr !== 'undefined') ? JSON.parse(profileStr) : {};
+  let profile = {};
+  try { profile = (profileStr && profileStr !== 'undefined' && profileStr !== 'null') ? JSON.parse(profileStr) : {}; } catch(e){}
+  profile = profile || {};
   if (!profile.is_admin) {
     showToast('Admin access required', 'error');
     window.location.hash = '#/dashboard';
@@ -100,7 +102,8 @@ async function adminUsers(el, page = 1) {
   const search = document.getElementById('admin-user-search')?.value || '';
   const data = await api.get(`/admin/users?page=${page}&limit=20&search=${encodeURIComponent(search)}`);
   const profileStr = localStorage.getItem('profile');
-  const myId = (profileStr && profileStr !== 'undefined') ? JSON.parse(profileStr).id : null;
+  let myId = null;
+  try { myId = (profileStr && profileStr !== 'undefined' && profileStr !== 'null') ? JSON.parse(profileStr).id : null; } catch(e){}
 
   el.innerHTML = `
     <div class="admin-header">
@@ -406,7 +409,8 @@ async function searchForAdmin() {
   try {
     const data = await api.get(`/admin/users?search=${encodeURIComponent(query)}&limit=5`);
     const profileStr = localStorage.getItem('profile');
-    const myId = (profileStr && profileStr !== 'undefined') ? JSON.parse(profileStr).id : null;
+    let myId = null;
+    try { myId = (profileStr && profileStr !== 'undefined' && profileStr !== 'null') ? JSON.parse(profileStr).id : null; } catch(e){}
 
     if (!data.users.length) {
       resultEl.innerHTML = '<p class="text-muted mt-2">No users found.</p>';
