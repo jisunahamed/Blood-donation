@@ -208,9 +208,9 @@ async function renderLanding() {
         <p>
           &copy; ${new Date().getFullYear()} রক্তসেতু — ক্যাম্পাস থেকে মানবতার পথে।<br/>
           <span style="font-size: 0.9rem; color: #fff; display: block; margin: 0.5rem 0;">Idea and Managed by <b>Md Omar Faruk</b></span>
-          <span style="font-size: 0.85rem; color: var(--muted);">
+          <span style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.9);">
             Built with ❤️ by
-            <a href="https://jisun.online" target="_blank" rel="noopener" style="color:#ff4d4d; text-decoration:none; font-weight:700;">Jisun</a>
+            <a href="https://jisun.online" target="_blank" rel="noopener" style="color:#ff4d4d; text-decoration:none; font-weight:800;">Jisun</a>
             &nbsp;•&nbsp; Student, Tongi Govt. College
           </span>
         </p>
