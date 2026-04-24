@@ -1,77 +1,100 @@
 // ============================================================
-// Dashboard Page
+// Dashboard Page — Bengali UI, Premium Design
 // ============================================================
 
 async function renderDashboard() {
   const app = document.getElementById('app');
-  app.innerHTML = '<div class="dashboard"><div class="spinner" style="padding:3rem;text-align:center"><div class="spinner-drop"></div><span>Loading dashboard…</span></div></div>';
+  app.innerHTML = `
+    <div class="page-container">
+      <div class="page-loading">
+        <div class="spinner-drop"></div>
+        <span>লোড হচ্ছে...</span>
+      </div>
+    </div>`;
 
   try {
     const data = await api.get('/users/me/dashboard');
 
-    const daysText = !data.is_available && data.days_until_available > 0
-      ? `<span class="text-red">Available in ${data.days_until_available} days</span>`
-      : '<span class="text-success">Ready to donate</span>';
+    const availText = !data.is_available && data.days_until_available > 0
+      ? `<span class="text-red">আরও ${data.days_until_available} দিন পর</span>`
+      : `<span class="avail-ready">✓ প্রস্তুত</span>`;
 
     app.innerHTML = `
-      <div class="dashboard">
-        <div class="dashboard-greeting">
-          <h1>Hello, ${data.name} ${bloodBadge(data.blood_group)}</h1>
-          <p>Welcome to your dashboard</p>
+      <div class="page-container">
+        <!-- Greeting -->
+        <div class="greeting-section">
+          <div class="greeting-left">
+            <p class="greeting-sub">স্বাগতম 👋</p>
+            <h1 class="greeting-name">${data.name} ${bloodBadge(data.blood_group)}</h1>
+          </div>
+          <a href="#/search" class="floating-action-btn">
+            🩸 রক্ত খুঁজুন
+          </a>
         </div>
 
-        <div class="dashboard-stats">
-          <div class="card stat-card glass-card">
-            <div class="stat-icon" style="background:var(--red-pale);color:var(--red)">🩸</div>
-            <div class="stat-value text-gradient" style="font-size:2rem">${formatDate(data.last_donation_date)}</div>
-            <div class="stat-label">Last Donated</div>
-          </div>
-          <div class="card stat-card glass-card">
-            <div class="stat-icon" style="background:var(--info-light);color:var(--info)">💉</div>
-            <div class="stat-value text-gradient" style="font-size:2rem">${formatDate(data.last_received_date)}</div>
-            <div class="stat-label">Last Received</div>
-          </div>
-          <div class="card stat-card glass-card">
-            <div class="stat-icon" style="background:${data.is_available ? 'var(--success-light)' : 'var(--red-pale)'};color:${data.is_available ? 'var(--success)' : 'var(--red)'}">
-              ${data.is_available ? '✓' : '⏳'}
+        <!-- Status Cards -->
+        <div class="status-cards">
+          <div class="status-card">
+            <div class="status-icon">🩸</div>
+            <div class="status-info">
+              <span class="status-label">সর্বশেষ দান</span>
+              <span class="status-value">${formatDate(data.last_donation_date)}</span>
             </div>
-            <div class="stat-value text-gradient">${data.is_available ? 'Available' : 'Unavailable'}</div>
-            <div class="stat-label">${daysText}</div>
+          </div>
+          <div class="status-card">
+            <div class="status-icon">💉</div>
+            <div class="status-info">
+              <span class="status-label">সর্বশেষ গ্রহণ</span>
+              <span class="status-value">${formatDate(data.last_received_date)}</span>
+            </div>
+          </div>
+          <div class="status-card ${data.is_available ? 'status-available' : 'status-busy'}">
+            <div class="status-icon">${data.is_available ? '✅' : '⏳'}</div>
+            <div class="status-info">
+              <span class="status-label">অবস্থা</span>
+              <span class="status-value">${data.is_available ? 'দান করতে পারব' : 'বিরতিতে আছি'}</span>
+              <span class="status-sub">${availText}</span>
+            </div>
           </div>
         </div>
 
-        <div class="dashboard-section">
-          <h3>📋 Network History</h3>
-          <div class="card">
-            ${data.network_history.length === 0
-              ? '<div class="empty-state"><div class="empty-icon">🔗</div><p>No contacts yet. Search for donors to get started.</p></div>'
-              : `<div class="table-wrap"><table class="table table-striped">
-                  <thead><tr><th>Donor Info</th><th>Blood Group</th><th>Last Contact</th><th>Times</th><th>Action</th></tr></thead>
-                  <tbody>${data.network_history.map(n => {
-                    const nameDisplay = n.contact?.hide_name ? 'Anonymous Donor' : (n.contact?.name || 'Anonymous Donor');
-                    return `
-                    <tr>
-                      <td>${nameDisplay} ${n.contact?.department ? `<span style="font-size:0.8rem;color:var(--muted)">(${n.contact.department})</span>` : ''}</td>
-                      <td>${bloodBadge(n.contact?.blood_group)}</td>
-                      <td>${formatDateTime(n.last_contact_at)}</td>
-                      <td>${n.contact_count}</td>
-                      <td>
-                        <button class="btn btn-success btn-sm" onclick="openDonationModal('${n.contact_id}')">✓ Donated</button>
-                      </td>
-                    </tr>`;
-                  }).join('')}
-                  </tbody>
-                </table></div>`
-            }
-          </div>
+        <!-- Network History -->
+        <div class="section-header">
+          <h2 class="section-title">📋 যোগাযোগ ইতিহাস</h2>
+        </div>
+        <div class="section-card">
+          ${data.network_history.length === 0
+            ? `<div class="empty-state">
+                <div class="empty-icon">🔗</div>
+                <p>এখনো কারো সাথে যোগাযোগ হয়নি।<br/>ডোনার খুঁজে যোগাযোগ শুরু করুন।</p>
+                <a href="#/search" class="btn btn-primary btn-sm">ডোনার খুঁজুন</a>
+               </div>`
+            : `<div class="network-list">
+                ${data.network_history.map(n => {
+                  const nameDisplay = n.contact?.hide_name ? 'পরিচয় গোপন' : (n.contact?.name || 'অজানা');
+                  return `
+                  <div class="network-item">
+                    <div class="network-avatar">${(nameDisplay[0] || '?').toUpperCase()}</div>
+                    <div class="network-info">
+                      <span class="network-name">${nameDisplay}${n.contact?.department ? ` <small>(${n.contact.department})</small>` : ''}</span>
+                      <span class="network-meta">${bloodBadge(n.contact?.blood_group)} &nbsp; ${formatDateTime(n.last_contact_at)}</span>
+                    </div>
+                    <button class="btn-donated" onclick="openDonationModal('${n.contact_id}')">✓ পেয়েছি</button>
+                  </div>`;
+                }).join('')}
+              </div>`
+          }
         </div>
 
-        <div class="dashboard-section">
-          <h3>📜 Recent Activity</h3>
-          <div class="card">
-            ${data.activity_log.length === 0
-              ? '<div class="empty-state"><div class="empty-icon">📭</div><p>No recent activity.</p></div>'
-              : `<div class="activity-feed">${data.activity_log.map(a => `
+        <!-- Recent Activity -->
+        <div class="section-header" style="margin-top: 2rem;">
+          <h2 class="section-title">📜 সাম্প্রতিক কার্যক্রম</h2>
+        </div>
+        <div class="section-card">
+          ${data.activity_log.length === 0
+            ? `<div class="empty-state"><div class="empty-icon">📭</div><p>কোনো কার্যক্রম নেই।</p></div>`
+            : `<div class="activity-feed">
+                ${data.activity_log.map(a => `
                   <div class="activity-item">
                     <div class="activity-dot"></div>
                     <div>
@@ -79,14 +102,13 @@ async function renderDashboard() {
                       <div class="activity-time">${formatDateTime(a.created_at)}</div>
                     </div>
                   </div>`).join('')}
-                </div>`
-            }
-          </div>
+              </div>`
+          }
         </div>
       </div>
     `;
   } catch (err) {
-    app.innerHTML = `<div class="dashboard"><div class="empty-state"><div class="empty-icon">⚠️</div><p>${err.message}</p></div></div>`;
+    app.innerHTML = `<div class="page-container"><div class="empty-state"><div class="empty-icon">⚠️</div><p>${err.message}</p></div></div>`;
     showToast(err.message, 'error');
   }
 }

@@ -16,7 +16,20 @@ const routes = {
 const authRequired = ['/dashboard', '/search', '/profile', '/admin'];
 
 async function router() {
-  const hash = window.location.hash.slice(1) || '/';
+  const rawHash = window.location.hash;
+
+  // Handle Google OAuth redirect — hash contains access_token fragment
+  if (rawHash.includes('access_token=') || rawHash.includes('type=recovery')) {
+    document.getElementById('app').innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:1rem;">
+        <div class="spinner-drop"></div>
+        <p style="color:var(--muted);">লগইন হচ্ছে, অপেক্ষা করুন...</p>
+      </div>`;
+    // Supabase will fire onAuthStateChange once it parses the hash
+    return;
+  }
+
+  const hash = rawHash.slice(1) || '/';
   const route = routes[hash];
 
   if (authRequired.includes(hash)) {
@@ -35,13 +48,11 @@ async function router() {
       profile = null;
     }
     if (!profile || !profile.blood_group) {
-      // Try fetching from backend to be sure
       try {
         const profileData = await api.get('/users/me');
         profile = profileData;
         localStorage.setItem('profile', JSON.stringify(profile));
       } catch (err) {
-        // If profile fetch fails (e.g. 401/404 because it doesn't exist), redirect to complete-profile
         window.location.hash = '#/complete-profile';
         return;
       }
@@ -248,6 +259,40 @@ async function handleLogout() {
 // ── Hamburger Toggle ────────────────────────────────────────
 document.getElementById('hamburger-btn')?.addEventListener('click', () => {
   document.getElementById('nav-links').classList.toggle('open');
+});
+// Close nav on link click (mobile)
+document.getElementById('nav-links')?.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A') {
+    document.getElementById('nav-links').classList.remove('open');
+  }
+});
+
+// ── Auth State Change (handles Google OAuth redirect) ───────
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'SIGNED_IN' && session) {
+    // Only redirect if still on the OAuth callback hash
+    if (window.location.hash.includes('access_token=')) {
+      showSpinner();
+      try {
+        let profile = null;
+        try {
+          const profileData = await api.get('/users/me');
+          profile = profileData;
+          localStorage.setItem('profile', JSON.stringify(profile));
+        } catch (_) {}
+        if (!profile || !profile.blood_group) {
+          window.location.hash = '#/complete-profile';
+        } else {
+          window.location.hash = '#/dashboard';
+        }
+      } finally {
+        hideSpinner();
+      }
+    }
+  } else if (event === 'SIGNED_OUT') {
+    localStorage.removeItem('profile');
+    window.location.hash = '#/login';
+  }
 });
 
 // ── Init ────────────────────────────────────────────────────
