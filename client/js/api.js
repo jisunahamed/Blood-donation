@@ -41,7 +41,17 @@ const api = {
     return json.data;
   },
 
-  get(path) { return this._request('GET', path); },
+  async get(path) {
+    // Client-side cache for locations
+    if (path === '/locations' || path === '/locations/') {
+      const cached = sessionStorage.getItem('api_cache_locations');
+      if (cached) return JSON.parse(cached);
+      const data = await this._request('GET', path);
+      sessionStorage.setItem('api_cache_locations', JSON.stringify(data));
+      return data;
+    }
+    return this._request('GET', path);
+  },
   post(path, body) { return this._request('POST', path, body); },
   put(path, body) { return this._request('PUT', path, body); },
   del(path) { return this._request('DELETE', path); },

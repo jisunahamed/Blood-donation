@@ -66,7 +66,7 @@ async function searchDonors() {
         : d.blood_group?.startsWith('B') ? '#27AE60'
         : d.blood_group?.startsWith('AB') ? '#8E44AD' : '#C0392B';
 
-      const initials = d.blood_group;
+      const initials = d.name.substring(0, 2).toUpperCase();
       const revealed = _donorState.revealedContacts[d.id];
       const deptDisplay = d.department ? `<span style="font-size: 0.8rem; color: var(--muted); margin-left: 0.5rem;">(${d.department})</span>` : '';
 
@@ -75,7 +75,7 @@ async function searchDonors() {
           <div class="donor-info">
             <div class="donor-avatar" style="background:${avatarColor}">${initials}</div>
             <div>
-              <div class="donor-name">Anonymous Donor ${deptDisplay}</div>
+              <div class="donor-name">${d.name} ${deptDisplay}</div>
               <div class="donor-location">📍 ${d.location_name}</div>
             </div>
           </div>
@@ -122,7 +122,7 @@ function openDonationModal(donorId) {
       <h3>Confirm Blood Donation</h3>
       <button class="modal-close" onclick="hideModal()">×</button>
     </div>
-    <p>Confirm that this anonymous donor donated blood to you?</p>
+    <p>Confirm that this donor donated blood to you?</p>
     <div class="form-group mt-2">
       <label class="form-label" for="donation-notes">Notes (optional)</label>
       <textarea class="form-input" id="donation-notes" rows="3" placeholder="Any notes about this donation…"></textarea>

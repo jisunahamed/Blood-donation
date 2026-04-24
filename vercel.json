@@ -14,11 +14,17 @@
     },
     {
       "src": "/css/(.*)",
-      "dest": "client/css/$1"
+      "dest": "client/css/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/js/(.*)",
-      "dest": "client/js/$1"
+      "dest": "client/js/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
     },
     {
       "src": "/",

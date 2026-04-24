@@ -50,11 +50,17 @@ async function renderProfile() {
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label">
-                <input type="checkbox" id="prof-available" ${profile.is_available ? 'checked' : ''} />
+              <label class="form-label" style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                <input type="checkbox" id="prof-available" style="width:16px;height:16px;" ${profile.is_available ? 'checked' : ''} />
                 Available for donation
               </label>
               <p class="form-hint">Uncheck if you're temporarily unavailable</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                <input type="checkbox" id="prof-hide-name" style="width:16px;height:16px;" ${profile.hide_name ? 'checked' : ''} />
+                Hide my name (Make profile anonymous)
+              </label>
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%">Save Changes</button>
           </form>
@@ -73,6 +79,7 @@ async function renderProfile() {
           contact_number: document.getElementById('prof-contact').value.trim(),
           department: document.getElementById('prof-dept').value.trim(),
           is_available: document.getElementById('prof-available').checked,
+          hide_name: document.getElementById('prof-hide-name').checked,
         });
         localStorage.setItem('profile', JSON.stringify(updated));
         showToast('Profile updated!');

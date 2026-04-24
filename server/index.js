@@ -65,9 +65,12 @@ app.get('/api/locations', async (_req, res) => {
       .eq('is_active', true)
       .order('name');
     if (error) throw error;
+
+    // Cache locations for 1 hour at CDN level
+    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
     res.json({ success: true, data });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message, code: 'LOCATIONS_ERROR' });
+    res.status(500).json({ success: false, message: err.message, code: 'FETCH_LOCATIONS_ERROR' });
   }
 });
 

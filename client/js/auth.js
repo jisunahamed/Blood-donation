@@ -119,6 +119,10 @@ async function renderRegister() {
             <label class="form-label" for="reg-dept">Department <small>(optional)</small></label>
             <input class="form-input" type="text" id="reg-dept" placeholder="e.g. CSE, MBA" />
           </div>
+          <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+            <input type="checkbox" id="reg-hide-name" style="width:16px;height:16px;" />
+            <label for="reg-hide-name" style="margin:0;cursor:pointer;">Hide my name (Make profile anonymous)</label>
+          </div>
           <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
         </form>
         <div style="margin: 1rem 0; text-align: center; color: var(--muted); font-size: 0.9rem;">OR</div>
@@ -141,6 +145,7 @@ async function renderRegister() {
     const location_id = document.getElementById('reg-location').value;
     const contact_number = document.getElementById('reg-contact').value.trim();
     const department = document.getElementById('reg-dept').value.trim();
+    const hide_name = document.getElementById('reg-hide-name').checked;
 
     if (password !== confirm) return showToast('Passwords do not match', 'error');
     if (password.length < 6) return showToast('Password must be at least 6 characters', 'error');
@@ -148,7 +153,7 @@ async function renderRegister() {
     showSpinner();
     try {
       const data = await api.post('/auth/register', {
-        email, password, name, blood_group, location_id, contact_number, department,
+        email, password, name, blood_group, location_id, contact_number, department, hide_name
       });
       if (data.session) {
         await supabaseClient.auth.setSession({
@@ -219,8 +224,12 @@ async function renderCompleteProfile() {
             <input class="form-input" type="tel" id="cp-contact" placeholder="e.g. 01XXXXXXXXX" required />
           </div>
           <div class="form-group">
-            <label class="form-label" for="cp-dept">Department <small>(optional)</small></label>
-            <input class="form-input" type="text" id="cp-dept" placeholder="e.g. CSE, BBA" />
+            <label class="form-label" for="comp-dept">Department <small>(optional)</small></label>
+            <input class="form-input" type="text" id="comp-dept" placeholder="e.g. CSE, BBA" />
+          </div>
+          <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+            <input type="checkbox" id="comp-hide-name" style="width:16px;height:16px;" />
+            <label for="comp-hide-name" style="margin:0;cursor:pointer;">Hide my name (Make profile anonymous)</label>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%">Save Profile</button>
         </form>
@@ -233,12 +242,13 @@ async function renderCompleteProfile() {
     const blood_group = document.getElementById('cp-blood').value;
     const location_id = document.getElementById('cp-location').value;
     const contact_number = document.getElementById('cp-contact').value.trim();
-    const department = document.getElementById('cp-dept').value.trim();
+    const department = document.getElementById('comp-dept').value.trim();
+    const hide_name = document.getElementById('comp-hide-name').checked;
 
     showSpinner();
     try {
       const data = await api.post('/auth/complete-profile', {
-        blood_group, location_id, contact_number, department
+        blood_group, location_id, contact_number, department, hide_name
       });
       localStorage.setItem('profile', JSON.stringify(data.profile));
       showToast('Profile completed successfully!');

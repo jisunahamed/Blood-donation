@@ -47,7 +47,7 @@ function handleValidationErrors(req, res, next) {
 // ── POST /api/auth/register ─────────────────────────────────
 router.post('/register', registerValidation, handleValidationErrors, async (req, res) => {
   try {
-    const { email, password, name, blood_group, location_id, contact_number, department } = req.body;
+    const { email, password, name, blood_group, location_id, contact_number, department, hide_name } = req.body;
 
     // 1. Sign up with Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.admin.createUser({
@@ -74,6 +74,7 @@ router.post('/register', registerValidation, handleValidationErrors, async (req,
         location_id,
         contact_number,
         department: department || null,
+        hide_name: hide_name === true,
         is_admin: false,
       })
       .select()
@@ -178,7 +179,7 @@ router.post('/complete-profile', [
       return res.status(401).json({ success: false, message: 'Invalid token', code: 'UNAUTHORIZED' });
     }
 
-    const { blood_group, contact_number, location_id, department } = req.body;
+    const { blood_group, contact_number, location_id, department, hide_name } = req.body;
 
     // Check if profile already exists
     const { data: existing } = await supabase.from('profiles').select('id').eq('id', user.id).single();
@@ -197,6 +198,7 @@ router.post('/complete-profile', [
         location_id,
         contact_number,
         department: department || null,
+        hide_name: hide_name === true,
         is_admin: false,
       })
       .select('*, locations(name, zone)')

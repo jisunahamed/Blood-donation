@@ -13,7 +13,7 @@ router.get('/search', async (req, res) => {
 
     let query = supabase
       .from('profiles')
-      .select('id, blood_group, is_available, locations(name, zone), department')
+      .select('id, name, hide_name, blood_group, is_available, locations(name, zone), department')
       .eq('is_available', true)
       .is('deleted_at', null)
       .neq('id', req.user.id)
@@ -35,6 +35,8 @@ router.get('/search', async (req, res) => {
     // Map to include location_name for convenience
     const donors = (data || []).map(d => ({
       id: d.id,
+      name: d.hide_name ? 'Anonymous Donor' : d.name,
+      hide_name: d.hide_name,
       blood_group: d.blood_group,
       department: d.department,
       is_available: d.is_available,

@@ -40,9 +40,10 @@ router.put('/me', [
   body('location_id').optional().isUUID(),
   body('department').optional(),
   body('is_available').optional().isBoolean(),
+  body('hide_name').optional().isBoolean(),
 ], handleValidation, async (req, res) => {
   try {
-    const allowedFields = ['name', 'blood_group', 'contact_number', 'location_id', 'department', 'is_available'];
+    const allowedFields = ['name', 'blood_group', 'contact_number', 'location_id', 'department', 'is_available', 'hide_name'];
     const updates = {};
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) {
@@ -104,7 +105,7 @@ router.get('/me/dashboard', async (req, res) => {
     // Network history (last 10)
     const { data: network, error: nErr } = await supabase
       .from('network_history')
-      .select('*, contact:contact_id(id, blood_group, department)')
+      .select('*, contact:contact_id(id, name, hide_name, blood_group, department)')
       .eq('user_id', userId)
       .order('last_contact_at', { ascending: false })
       .limit(10);
