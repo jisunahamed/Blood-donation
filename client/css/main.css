@@ -873,16 +873,18 @@ input, select, textarea { font-family: inherit; }
 }
 
 /* ─── Dark theme overrides on mobile nav dropdown ─── */
-.dark-theme .nav-links {
-  background: rgba(10, 10, 20, 0.98) !important;
-  border-bottom-color: rgba(255,255,255,0.08) !important;
-}
-.dark-theme .nav-links a {
-  color: rgba(255,255,255,0.85) !important;
-  border-bottom-color: rgba(255,255,255,0.06) !important;
-}
-.dark-theme .nav-links a:hover {
-  background: rgba(255,46,46,0.12) !important;
-  color: #fff !important;
+@media (max-width: 768px) {
+  .dark-theme .nav-links {
+    background: rgba(10, 10, 20, 0.98) !important;
+    border-bottom-color: rgba(255,255,255,0.08) !important;
+  }
+  .dark-theme .nav-links a {
+    color: rgba(255,255,255,0.85) !important;
+    border-bottom-color: rgba(255,255,255,0.06) !important;
+  }
+  .dark-theme .nav-links a:hover {
+    background: rgba(255,46,46,0.12) !important;
+    color: #fff !important;
+  }
 }
 .dark-theme .hamburger span { background: #fff !important; }
