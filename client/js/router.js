@@ -26,8 +26,14 @@ async function router() {
       return;
     }
     
-    // Check if profile exists
-    let profile = JSON.parse(localStorage.getItem('profile') || 'null');
+    // Check if profile exists safely
+    let profileStr = localStorage.getItem('profile');
+    let profile = null;
+    try {
+      profile = profileStr && profileStr !== 'undefined' ? JSON.parse(profileStr) : null;
+    } catch (e) {
+      profile = null;
+    }
     if (!profile || !profile.blood_group) {
       // Try fetching from backend to be sure
       try {
@@ -124,7 +130,8 @@ async function renderLanding() {
 async function updateNav() {
   const navLinks = document.getElementById('nav-links');
   const { data } = await supabaseClient.auth.getSession();
-  const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+  const profileStr = localStorage.getItem('profile');
+  const profile = (profileStr && profileStr !== 'undefined') ? JSON.parse(profileStr) : {};
   const hash = window.location.hash.slice(1) || '/';
 
   if (data?.session) {
