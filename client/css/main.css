@@ -761,6 +761,19 @@ input, select, textarea { font-family: inherit; }
   transform: scale(1.1);
 }
 
+/* ── Bottom Nav Dark Theme ── */
+.dark-theme #bottom-nav {
+  background: rgba(10, 10, 20, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+.dark-theme #bottom-nav .bnav-item {
+  color: rgba(255, 255, 255, 0.6);
+}
+.dark-theme #bottom-nav .bnav-item.active,
+.dark-theme #bottom-nav .bnav-item:hover {
+  color: var(--red-solid);
+}
+
 /* ═══════════════════════════════════════════════════════════════
    MOBILE RESPONSIVE — max-width: 768px
    ═══════════════════════════════════════════════════════════════ */
